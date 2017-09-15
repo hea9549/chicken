@@ -15,6 +15,7 @@ import com.nhn.android.maps.maplib.NGPoint;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.maplib.NMapConverter;
 import com.nhn.android.maps.overlay.NMapPathData;
+import com.nhn.android.mapviewer.overlay.NMapPathDataOverlay;
 
 import java.util.List;
 
@@ -31,5 +32,15 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
     @Override
     public void drawPath(List<TransPosition> positions){
         // 화면그리기 작성해야함
+        NMapPathData pathData = new NMapPathData(positions.size());
+
+        pathData.initPathData();
+        for(int i=0;i<positions.size();i++)
+        {
+            pathData.addPathPoint(positions.get(i).getLongitude(), positions.get(i).getLatitude(), 0);
+        }
+        pathData.endPathData();
+
+        NMapPathDataOverlay pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
     }
 }
