@@ -39,5 +39,6 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
     compile 'com.tsengvn:Typekit:1.0.0'
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.1.2'
+    compile 'com.naver.maps.open:naver-map-api:2.1.2@aar'
     testCompile 'junit:junit:4.12'
 }

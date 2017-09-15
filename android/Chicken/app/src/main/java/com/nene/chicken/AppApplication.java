@@ -9,12 +9,9 @@ import com.tsengvn.typekit.Typekit;
  */
 
 public class AppApplication extends Application {
+    public static String NAVER_CLIENT_ID="gkfBBEDqefty0QjgtA6n";
     @Override
     public void onCreate() {
         super.onCreate();
-        Typekit.getInstance()
-                .addNormal(Typekit.createFromAsset(this, "fonts/NanumSquareR.otf"))
-                .addBold(Typekit.createFromAsset(this, "fonts/NanumSquareB.otf"))
-                .addCustom1(Typekit.createFromAsset(this, "fonts/NanumBarunGothic.otf"));
     }
 }
