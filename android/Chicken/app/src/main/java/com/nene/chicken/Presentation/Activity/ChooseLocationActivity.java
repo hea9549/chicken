@@ -20,9 +20,11 @@ import com.nene.chicken.Util.GeoTrans;
 import com.nene.chicken.Util.GeoTransPoint;
 import com.nhn.android.maps.maplib.NMapConverter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChooseLocationActivity extends Activity {
@@ -37,6 +39,8 @@ public class ChooseLocationActivity extends Activity {
     private int mapyFrom;
     private int mapxTo;
     private int mapyTo;
+
+    private ArrayList<MarkInfo> markInfoList = new ArrayList<MarkInfo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +58,6 @@ public class ChooseLocationActivity extends Activity {
     private double convertLongitude(int x, int y){
         return NMapConverter.utmK2Grs(x, y).getLongitude();
     }
-
-
 
     public static final int FROM_ACTIVITY_RESULT = 1;
     public static final int TO_ACTIVITY_RESULT = 2;
@@ -123,6 +125,9 @@ public class ChooseLocationActivity extends Activity {
     }
 
     private void findRoute(){
+
+        markInfoList.clear();
+
 //        카텍좌표계 변환(6자리)
         GeoTransPoint oKAFrom = new GeoTransPoint(mapxFrom, mapyFrom);
         GeoTransPoint oGeoFrom = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, oKAFrom);
@@ -134,24 +139,38 @@ public class ChooseLocationActivity extends Activity {
         double destLo = oGeoTo.getX();
 //
         String url = "start=" + startLo + "," + startLa + "&destination=" + destLo + "," + destLa;
-
+        Log.d("markinfo",url);
         Communicator.getHttp(1, url, new Handler() {
             public void handleMessage(Message msg) {
+
+                markInfoList.clear();
 
                 String jsonString = msg.getData().getString("jsonString");
                 Log.d("jsonString",jsonString);
                 try {
                     JSONObject dataObject = new JSONObject(jsonString);
-                    String result = dataObject.getString("result");
+                    JSONObject dataObject2 = new JSONObject(dataObject.getString("result"));
+                    JSONObject summaryObject = new JSONObject(dataObject2.getString("summary"));
 
-                    JSONObject dataObject2 = new JSONObject(result);
-                    String summary = dataObject2.getString("summary");
-
-                    Log.d("yurimmm summary", result);
-                    JSONObject  tempObject = new JSONObject(summary);
-
-                    int totalDistance = tempObject.getInt("totalDistance");
+                    int totalDistance = summaryObject.getInt("totalDistance");
                     String toastString = totalDistance + " distance";
+
+                    JSONArray routeArray = new JSONArray(dataObject2.getString("route"));
+
+                    for (int i = 0; i < routeArray.length(); i++) {
+                        JSONObject routeObject = new JSONObject(routeArray.getString(i));
+                        JSONArray pointArray = new JSONArray(routeObject.getString("point"));
+
+                        for(int j =0; j < pointArray.length();j++){
+                            Log.d("markInfo  in pointArray", pointArray.getString(j));
+                            JSONObject pointObject = new JSONObject(pointArray.getString(j));
+                            JSONObject guideObject = new JSONObject(pointObject.getString("guide"));
+
+                            markInfoList.add(new MarkInfo(pointObject.getInt("x"), pointObject.getInt("y")));
+                            
+                        }
+
+                    }
 
                     Toast.makeText(ChooseLocationActivity.this, toastString , Toast.LENGTH_SHORT).show();
 
