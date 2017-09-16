@@ -10,15 +10,19 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.nene.chicken.AppApplication;
+import com.nene.chicken.NMap.NMapViewerResourceProvider;
 import com.nene.chicken.Presentation.Presenter.MainPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenterImpl;
 import com.nene.chicken.R;
+import com.nhn.android.maps.NMapCompassManager;
 import com.nhn.android.maps.NMapContext;
 import com.nhn.android.maps.NMapController;
 import com.nhn.android.maps.NMapLocationManager;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
+import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
+import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -37,6 +41,10 @@ public class MapFragment extends Fragment {
     private NMapView mapView;
     private MainPresenter presenter;
     private NMapController mapController;
+    private NMapViewerResourceProvider mMapViewerResourceProvider;
+    private NMapOverlayManager mOverlayManager;
+    private NMapMyLocationOverlay mMyLocationOverlay;
+    private NMapCompassManager mMapCompassManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +54,12 @@ public class MapFragment extends Fragment {
         presenter = new MainPresenterImpl();
         locationManager = new NMapLocationManager(getContext());
         locationManager.enableMyLocation(true);
+        mMapViewerResourceProvider = new NMapViewerResourceProvider(getContext());
+        mMapCompassManager = new NMapCompassManager(getActivity());
+
+// create overlay manager
+        mOverlayManager = new NMapOverlayManager(getContext(), mapView, mMapViewerResourceProvider);
+        mMyLocationOverlay = mOverlayManager.createMyLocationOverlay(locationManager, mMapCompassManager);
         Observable.interval(1, TimeUnit.SECONDS)
                 .take(100)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -71,6 +85,32 @@ public class MapFragment extends Fragment {
         mapView.requestFocus();
         mMapContext.setupMapView(mapView);
         mapController = mapView.getMapController();
+        mapView.setOnMapStateChangeListener(new NMapView.OnMapStateChangeListener() {
+            @Override
+            public void onMapInitHandler(NMapView nMapView, NMapError nMapError) {
+
+            }
+
+            @Override
+            public void onMapCenterChange(NMapView nMapView, NGeoPoint nGeoPoint) {
+                mapController.setMapCenter(nGeoPoint);
+            }
+
+            @Override
+            public void onMapCenterChangeFine(NMapView nMapView) {
+
+            }
+
+            @Override
+            public void onZoomLevelChange(NMapView nMapView, int i) {
+
+            }
+
+            @Override
+            public void onAnimationStateChange(NMapView nMapView, int i, int i1) {
+
+            }
+        });
     }
 
     @Override

@@ -24,7 +24,7 @@ public class DistanceUtil {
     }
 
     public static double calDistance(TransPosition p1, TransPosition p2){
-        double lat1 = p1.getLatitude(),lon1 = p1.getLongitude(),lat2=p2.getLatitude(),lon2=p2.getLatitude();
+        double lat1 = p1.getLatitude(),lon1 = p1.getLongitude(),lat2=p2.getLatitude(),lon2=p2.getLongitude();
         double theta, dist;
         theta = lon1 - lon2;
         dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1))
