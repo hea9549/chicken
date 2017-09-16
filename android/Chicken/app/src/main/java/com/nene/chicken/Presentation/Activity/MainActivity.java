@@ -105,7 +105,7 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
 
                     int totalDistance = tempObject.getInt("totalDistance");
                     String toastString = totalDistance + " distance";
-                    
+
                     Toast.makeText(MainActivity.this, toastString , Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
