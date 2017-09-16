@@ -85,9 +85,21 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s->{
                     Toast.makeText(this, "모두계산햇찌롱!", Toast.LENGTH_SHORT).show();
-                    for(int i = 0 ; i <positions.size()-1;i++){
-                        totalDistance+=DistanceUtil.calDistance(positions.get(i),positions.get(i+1));
+                    double totalHeightSum = 0;
+                    for(int i = 0 ; i < positions.size()-1;i++){
+                        totalHeightSum +=Math.abs(positions.get(i).getHeight()-positions.get(i+1).getHeight());
                     }
+                    List<TransPosition> allPathPositions = new ArrayList<>();
+                    for(int i = 0 ; i <markInfoes.size();i++){
+                        if (markInfoes.get(i).getPathPositions() == null)continue;
+                        allPathPositions.addAll(markInfoes.get(i).getPathPositions());
+                    }
+                    for(int i = 0 ; i<allPathPositions.size()-1;i++){
+                        allPathPositions.get(i).setHeight(totalHeightSum/markInfoes.size());
+                        allPathPositions.get(i+1).setHeight(totalHeightSum/markInfoes.size());
+                        totalDistance+=DistanceUtil.calDistance(allPathPositions.get(i),allPathPositions.get(i+1));
+                    }
+
 
                     for (int i = 0 ; i < positions.size()-1;i++){
                         double floorDistance = DistanceUtil.calcDistance(positions.get(i).getLatitude(),positions.get(i).getLongitude()
