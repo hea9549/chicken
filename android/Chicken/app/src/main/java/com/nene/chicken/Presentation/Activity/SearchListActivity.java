@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class SearchListActivity extends Activity {
     private SearchListAdapter searchListAdapter;
     private ListView searchListView;
     private ArrayList<SearchResultInfo> searchResultInfoList = new ArrayList<SearchResultInfo>();
+    private Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,14 @@ public class SearchListActivity extends Activity {
         searchListView.setAdapter(searchListAdapter);
         searchListView.setOnItemClickListener(searchItemClickListener);
         searchListView.setDividerHeight(0);
+
+        backButton = (Button)findViewById(R.id.back_Button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         searchPosition();
     }
