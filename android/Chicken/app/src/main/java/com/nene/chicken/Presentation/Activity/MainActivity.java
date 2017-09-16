@@ -3,7 +3,9 @@ package com.nene.chicken.Presentation.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.os.Message;
+import android.os.Message
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.nene.chicken.AppApplication;
 import com.nene.chicken.Model.TransPosition;
+import com.nene.chicken.Presentation.Fragment.MapFragment;
 import com.nene.chicken.Presentation.Presenter.BaseViewPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenterImpl;
@@ -30,11 +33,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class MainActivity extends ChickenBaseActivity implements MainPresenter.View {
     MainPresenter presenter;
     private NMapView mMapView;// 지도 화면 View
-
     private EditText fromEditText;
     private EditText toEditText;
     private Button fromButton;
@@ -44,13 +50,20 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setLayout();
-        Log.e("좌표","" + NMapConverter.utmK2Grs(350111810, 149774298).getLatitude() + "," + NMapConverter.utmK2Grs(350111810, 149774298).getLongitude());
+
+        MapFragment fragment = new MapFragment();
+        fragment.setArguments(new Bundle());
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.add(R.id.mapContainer, fragment);
+        fragmentTransaction.commit();
+        Log.e("좌표", "" + NMapConverter.utmK2Grs(350111810, 149774298).getLatitude() + "," + NMapConverter.utmK2Grs(350111810, 149774298).getLongitude());
+
     }
 
     @Override
-    public void drawPath(List<TransPosition> positions){
+    public void drawPath(List<TransPosition> positions) {
         // 화면그리기 작성해야함
     }
 
