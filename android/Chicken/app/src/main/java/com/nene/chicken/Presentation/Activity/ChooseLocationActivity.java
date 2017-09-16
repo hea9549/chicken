@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.nene.chicken.Model.TransPosition;
 import com.nene.chicken.R;
+import com.nene.chicken.Util.GeoTrans;
+import com.nene.chicken.Util.GeoTransPoint;
 import com.nhn.android.maps.maplib.NMapConverter;
 
 import org.json.JSONException;
@@ -46,7 +48,7 @@ public class ChooseLocationActivity extends Activity {
 
 
     private double convertLatitude(int x, int y){
-        return NMapConverter.utmK2Grs(x, y).getLatitude();
+        return NMapConverter.utmK2Grs(x, y).getLatitude(); // 카텍좌표계 변환(9자리)
     }
 
     private double convertLongitude(int x, int y){
@@ -121,13 +123,17 @@ public class ChooseLocationActivity extends Activity {
     }
 
     private void findRoute(){
-
-        double startLa = convertLatitude(mapxFrom,mapyFrom);
-        double startLo = convertLongitude(mapxFrom,mapyFrom);
-        double destLa = convertLatitude(mapxTo,mapyTo);
-        double destLo = convertLongitude(mapxTo,mapyTo);
-
-        String url = "start=" + startLa + "," + startLo + "&destination=" + destLa + "," + destLo;
+//        카텍좌표계 변환(6자리)
+        GeoTransPoint oKAFrom = new GeoTransPoint(mapxFrom, mapyFrom);
+        GeoTransPoint oGeoFrom = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, oKAFrom);
+        GeoTransPoint oKATo = new GeoTransPoint(mapxTo, mapyTo);
+        GeoTransPoint oGeoTo = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, oKATo);
+        double startLa = oGeoFrom.getY();
+        double startLo = oGeoFrom.getX();
+        double destLa = oGeoTo.getY();
+        double destLo = oGeoTo.getX();
+//
+        String url = "start=" + startLo + "," + startLa + "&destination=" + destLo + "," + destLa;
 
         Communicator.getHttp(1, url, new Handler() {
             public void handleMessage(Message msg) {
