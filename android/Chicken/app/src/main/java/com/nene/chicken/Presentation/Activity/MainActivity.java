@@ -24,6 +24,8 @@ import com.nhn.android.maps.maplib.NMapConverter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 public class MainActivity extends ChickenBaseActivity implements MainPresenter.View {
@@ -57,8 +59,8 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
     }
 
     private void setLayout(){
-        fromEditText = (EditText)findViewById(R.id.editText);
-        toEditText = (EditText)findViewById(R.id.editText2);
+        fromEditText = (EditText)findViewById(R.id.from_EditText);
+        toEditText = (EditText)findViewById(R.id.to_EditText);
 
         fromButton = (Button) findViewById(R.id.button2);
         fromButton.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +84,45 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         });
     }
 
+    private void searchPosition(){
+        String query = fromEditText.getText().toString();
+
+        try {
+            query = URLEncoder.encode(query,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        String url = "query=%EC%A3%BC%EC%8B%9D&display=10&start=1&sort=random";
+
+        Communicator.getHttp(2, url, new Handler() {
+            public void handleMessage(Message msg) {
+
+//                String jsonString = msg.getData().getString("jsonString");
+//                Log.d("jsonString",jsonString);
+//                try {
+//                    JSONObject dataObject = new JSONObject(jsonString);
+//                    String result = dataObject.getString("result");
+//
+//                    JSONObject dataObject2 = new JSONObject(result);
+//                    String summary = dataObject2.getString("summary");
+//
+//                    Log.d("yurimmm summary", result);
+//                    JSONObject  tempObject = new JSONObject(summary);
+//
+//                    int totalDistance = tempObject.getInt("totalDistance");
+//                    String toastString = totalDistance + " distance";
+//
+//                    Toast.makeText(MainActivity.this, toastString , Toast.LENGTH_SHORT).show();
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+
+            }
+        });
+    }
+
     private void findRoute(){
         double startLa = 127.6433222;
         double startLo = 37.7965062;
@@ -90,7 +131,7 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
 
         String url = "start=" + startLa + "," + startLo + "&destination=" + destLa + "," + destLo;
 
-        Communicator.getHttp(url, new Handler() {
+        Communicator.getHttp(1, url, new Handler() {
             public void handleMessage(Message msg) {
 
                 String jsonString = msg.getData().getString("jsonString");

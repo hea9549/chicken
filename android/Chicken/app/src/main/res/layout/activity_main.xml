@@ -7,7 +7,7 @@
     tools:context="com.nene.chicken.Presentation.Activity.MainActivity">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/from_EditText"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginLeft="16dp"
@@ -23,7 +23,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
         android:text="검색"
-        app:layout_constraintLeft_toRightOf="@+id/editText"
+        app:layout_constraintLeft_toRightOf="@+id/from_EditText"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -33,18 +33,18 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="검색"
-        app:layout_constraintLeft_toRightOf="@+id/editText2"
+        app:layout_constraintLeft_toRightOf="@+id/to_EditText"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/to_EditText"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:hint="도착지"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/from_EditText" />
 
     <FrameLayout
         android:id="@+id/mapContainer"
@@ -57,5 +57,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/to_EditText" />
 </android.support.constraint.ConstraintLayout>

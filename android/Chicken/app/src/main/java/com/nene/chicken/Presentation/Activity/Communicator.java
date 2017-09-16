@@ -34,9 +34,20 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 public class Communicator {
-	private static String webUrl = "http://map.naver.com/findroute2/findWalkRoute.nhn?call=route2&output=json&coord_type=naver&search=0&";
+	private static String findRouteUrl = "http://map.naver.com/findroute2/findWalkRoute.nhn?call=route2&output=json&coord_type=naver&search=0&";
+    private static String searchPositionUrl =  "https://openapi.naver.com/v1/search/local.xml?";
 
-	public static void getHttp(String url, final Handler mHandler) {
+
+//    urlType - 1:findRouteUrl  2:searchPositionUrl
+	public static void getHttp(int urlType, String url, final Handler mHandler) {
+        String webUrl = "";
+
+        if(urlType == 1){
+            webUrl = findRouteUrl;
+        }else{
+            webUrl = searchPositionUrl;
+        }
+
 		final String httpUrl = webUrl + url;
 //		MLog.d(httpUrl);
 
@@ -67,7 +78,14 @@ public class Communicator {
 		try {
 			URL url = new URL(address);
 
+			String clientId = "ipifACa9CBcwO3KA5ERI";//애플리케이션 클라이언트 아이디값";
+			String clientSecret = "toI2TO5ffH";//애플리케이션 클라이언트 시크릿값";
+
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setRequestProperty("X-Naver-Client-Id", clientId);
+            urlConnection.setRequestProperty("X-Naver-Client-Secret", clientSecret);
 
 			if (urlConnection != null) {
 				urlConnection.setConnectTimeout(timeout);
