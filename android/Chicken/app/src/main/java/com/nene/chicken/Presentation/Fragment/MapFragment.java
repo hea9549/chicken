@@ -1,16 +1,14 @@
 package com.nene.chicken.Presentation.Fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.nene.chicken.AppApplication;
-import com.nene.chicken.Model.TransPosition;
 import com.nene.chicken.NMap.NMapViewerResourceProvider;
 import com.nene.chicken.Presentation.Activity.MainActivity;
 import com.nene.chicken.Presentation.Activity.MarkInfo;
@@ -31,7 +29,6 @@ import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 import com.nhn.android.mapviewer.overlay.NMapPathDataOverlay;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -123,7 +120,6 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
                         mySpeed = presenter.getSpeed(locationManager.getMyLocation());
                         Log.e("속도당", "내 평균 속도 : " + mySpeed);
                         ((MainActivity) getActivity()).setSpeed(mySpeed);
-                        mapController.setMapCenter(locationManager.getMyLocation());
                     }
                 }, fail -> Log.e("ERROR IN TICK", "error in tick =" + fail.toString()));
     }
@@ -172,35 +168,7 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
 
     @Override
     public void drawPath(List<MarkInfo> positions) {
-        int posCount = 0;
-        for (int i = 0; i < positions.size(); i++) {
-            try {
-                String pathJson = positions.get(i).getPathJson();
-                String[] coorJson = pathJson.split(" ");
-                if (coorJson[0].isEmpty())continue;
-                posCount+=(coorJson.length);
-            } catch (Exception e) {
-            }
-        }
-        NMapPathData pathData = new NMapPathData(posCount);
 
-        pathData.initPathData();
-        for (int i = 0; i < positions.size()-1; i++) {
-            try {
-                String pathJson = positions.get(i).getPathJson();
-                if (pathJson.isEmpty())continue;
-                String[] coorJson = pathJson.split(" ");
-                for (int j = 0; j < coorJson.length; j++) {
-                    NGeoPoint np = NMapConverter.utmK2Grs(Integer.valueOf(coorJson[j].split(",")[0]), Integer.valueOf(coorJson[j].split(",")[1]));
-                    pathData.addPathPoint(np.getLongitude(), np.getLatitude(), 0);
-                }
-            } catch (Exception e) {
-                Log.e("앙댕","exception = "+e.toString());
-            }
-        }
-        pathData.endPathData();
-        NMapPathDataOverlay pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
-        pathDataOverlay.set
     }
 
     public void setTotalDistance(double totalDistance) {
@@ -216,5 +184,39 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
             return;
         }
         ((MainActivity) getActivity()).setTakeTime((int) (totalDistance / mySpeed / 60));
+    }
+
+    public void drawPath(MarkInfo markInfo) {
+        int posCount = 0;
+        String pathJson = markInfo.getPathJson();
+        String[] coorJson = pathJson.split(" ");
+        if (coorJson[0].isEmpty()) return;
+        posCount += (coorJson.length);
+
+        NMapPathData pathData = new NMapPathData(posCount);
+        pathData.initPathData();
+        if (pathJson.isEmpty()) return;
+        for (int j = 0; j < coorJson.length; j++) {
+            NGeoPoint np = NMapConverter.utmK2Grs(Integer.valueOf(coorJson[j].split(",")[0]), Integer.valueOf(coorJson[j].split(",")[1]));
+            pathData.addPathPoint(np.getLongitude(), np.getLatitude(), 0 );
+        }
+        pathData.endPathData();
+
+        NMapPathDataOverlay pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
+        if (markInfo.inclineType == MarkInfo.INCLINE_ASCENT){
+            pathDataOverlay.setLineColor(Color.rgb(234,158,55),100);
+        }
+        if (markInfo.inclineType == MarkInfo.INCLINE_DESCENT){
+            pathDataOverlay.setLineColor(Color.rgb(51,219,238),100);
+        }
+        if (markInfo.inclineType == MarkInfo.INCLINE_FLAT){
+            pathDataOverlay.setLineColor(Color.rgb(108,231,244),100);
+        }
+        if (markInfo.inclineType == MarkInfo.INCLINE_HARD_ASCENT){
+            pathDataOverlay.setLineColor(Color.rgb(255,0,0),100);
+        }
+        if (markInfo.inclineType == MarkInfo.INCLINE_HARD_DESCENT){
+            pathDataOverlay.setLineColor(Color.rgb(0,0,255),100);
+        }
     }
 }

@@ -10,7 +10,13 @@ public class MarkInfo implements Serializable{
     private String pathJson;
     private int mapx;
     private int mapy;
-    private int 
+    public int inclineType;
+    public final static int INCLINE_DESCENT = 0;
+    public final static int INCLINE_ASCENT = 1;
+    public final static int INCLINE_FLAT = 2;
+    public final static int INCLINE_HARD_DESCENT= 3;
+    public final static int INCLINE_HARD_ASCENT = 4;
+
     public MarkInfo(int mapx, int mapy, String pathJson) {
         this.mapx = mapx;
         this.mapy = mapy;
