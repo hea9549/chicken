@@ -59,8 +59,7 @@
         android:orientation="horizontal" />
 
     <RelativeLayout
-        android:visibility="invisible"
-        tools:visibility="visible"
+        android:background="#ffffff"
         android:id="@+id/wrapper_info"
         android:layout_width="match_parent"
         android:layout_height="100dp"
