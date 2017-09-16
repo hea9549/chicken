@@ -36,6 +36,7 @@ public class MapFragment extends Fragment {
     private NMapLocationManager locationManager;
     private NMapView mapView;
     private MainPresenter presenter;
+    private NMapController mapController;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,12 +46,16 @@ public class MapFragment extends Fragment {
         presenter = new MainPresenterImpl();
         locationManager = new NMapLocationManager(getContext());
         locationManager.enableMyLocation(true);
-        Observable.timer(1, TimeUnit.SECONDS)
+        Observable.interval(1, TimeUnit.SECONDS)
+                .take(100)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(tick -> {
-                    if (locationManager.isMyLocationEnabled())
-                        Toast.makeText(getContext(), "내 속도 : "+presenter.getSpeed(locationManager.getMyLocation()), Toast.LENGTH_SHORT).show();
+                    Log.e("와이","??:"+locationManager.isMyLocationEnabled());
+                    if (locationManager.isMyLocationEnabled()){
+                        Toast.makeText(getContext(), "내 평균 속도 : "+presenter.getSpeed(locationManager.getMyLocation()), Toast.LENGTH_SHORT).show();
+                        mapController.setMapCenter(locationManager.getMyLocation());
+                    }
                 }, fail -> Log.e("ERROR IN TICK", "error in tick =" + fail.toString()));
     }
 
@@ -65,7 +70,7 @@ public class MapFragment extends Fragment {
         mapView.setFocusableInTouchMode(true);
         mapView.requestFocus();
         mMapContext.setupMapView(mapView);
-
+        mapController = mapView.getMapController();
     }
 
     @Override
