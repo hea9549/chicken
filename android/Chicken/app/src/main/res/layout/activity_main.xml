@@ -71,7 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
-                        android:gravity="center"
+                        android:gravity="left|center_vertical"
                         android:text="kang chon" />
 
                 </LinearLayout>
@@ -93,7 +93,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
-                        android:gravity="center"
+                        android:gravity="left|center_vertical"
                         android:text="house" />
 
                 </LinearLayout>
@@ -104,20 +104,22 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/wrapper_info"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="#ffffff"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
         <TextView
             android:id="@+id/tv_startTime"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
             android:textColor="#86ABBA"
             android:textSize="18dp"
             tools:text="14:20 ~" />
@@ -126,19 +128,11 @@
             android:id="@+id/tv_endTime"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_toRightOf="@id/tv_startTime"
-            android:gravity="center"
             android:textColor="#86ABBA"
             android:textSize="18dp"
             tools:text="14:40" />
 
-        <TextView
-            android:id="@+id/tv_speed"
-            android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
 
         <ImageView
             android:layout_width="30dp"
@@ -154,6 +148,14 @@
             android:textSize="16dp"
             tools:text="20Min" />
 
+        </LinearLayout>
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_speed"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
 </LinearLayout>
