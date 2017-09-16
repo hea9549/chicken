@@ -115,6 +115,7 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
 
 
         Observable.interval(1, TimeUnit.SECONDS)
+                .delay(5,TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(tick -> {
