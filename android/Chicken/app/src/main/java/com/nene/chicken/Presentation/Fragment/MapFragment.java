@@ -176,17 +176,14 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
 
     public void setTotalDistance(double totalDistance) {
         this.totalDistance = totalDistance;
-        if (presenter.getPositionsSize()<15) {
-            Observable.just("retry")
-                    .delay(2, TimeUnit.SECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(s -> {
-                        setTotalDistance(totalDistance);
-                    }, fa -> Log.e("또", "실패냐= " + fa.toString()));
-            return;
-        }
-        ((MainActivity) getActivity()).setTakeTime((int) (totalDistance / mySpeed / 60));
+        Observable.just("gogo")
+                .delay(30,TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(s->{
+                    ((MainActivity) getActivity()).setTakeTime((int) (totalDistance / mySpeed / 60));
+
+                });
     }
 
     public void drawPath(MarkInfo markInfo) {
@@ -207,19 +204,19 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
 
         NMapPathDataOverlay pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
         if (markInfo.inclineType == MarkInfo.INCLINE_ASCENT){
-            pathDataOverlay.setLineColor(Color.rgb(234,158,55),100);
+            pathDataOverlay.setLineColor(Color.rgb(234,158,55),255);
         }
         if (markInfo.inclineType == MarkInfo.INCLINE_DESCENT){
-            pathDataOverlay.setLineColor(Color.rgb(51,219,238),100);
+            pathDataOverlay.setLineColor(Color.rgb(51,219,238),255);
         }
         if (markInfo.inclineType == MarkInfo.INCLINE_FLAT){
-            pathDataOverlay.setLineColor(Color.rgb(108,231,244),100);
+            pathDataOverlay.setLineColor(Color.rgb(108,231,244),255);
         }
         if (markInfo.inclineType == MarkInfo.INCLINE_HARD_ASCENT){
-            pathDataOverlay.setLineColor(Color.rgb(255,0,0),100);
+            pathDataOverlay.setLineColor(Color.rgb(255,0,0),255);
         }
         if (markInfo.inclineType == MarkInfo.INCLINE_HARD_DESCENT){
-            pathDataOverlay.setLineColor(Color.rgb(0,0,255),100);
+            pathDataOverlay.setLineColor(Color.rgb(0,0,255),255);
         }
         pathDataOverlay.setLineWidth(4.0f);
         pathDataOverlay.showAllPathData(10);

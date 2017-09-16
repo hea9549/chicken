@@ -123,6 +123,7 @@ public class SearchListActivity extends ChickenBaseActivity {
                         String title = tempObject.getString("title");
                         title = title.replace("<b>","");
                         title = title.replace("</b>","");
+                        title = title.replace("&amp;","");
 
                         String roadAddress = tempObject.getString("roadAddress");
                         int mapx = tempObject.getInt("mapx");

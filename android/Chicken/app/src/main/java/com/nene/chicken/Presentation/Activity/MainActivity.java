@@ -20,7 +20,9 @@ import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.maplib.NMapConverter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -145,6 +147,10 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
 
     public void setTakeTime(int min){
         tv_takeTime.setText(""+min+"Min");
+        Date date = new Date();
+        Date calcDate = new Date(date.getTime()+(min*60*1000));
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm");
+        tv_endTime.setText(""+format.format(calcDate));
     }
 
 }
