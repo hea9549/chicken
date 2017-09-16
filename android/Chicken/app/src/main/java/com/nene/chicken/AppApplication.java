@@ -10,6 +10,7 @@ import com.tsengvn.typekit.Typekit;
 
 public class AppApplication extends Application {
     public static String NAVER_CLIENT_ID="gkfBBEDqefty0QjgtA6n";
+    public static String GOOGLE_MAP_ID="AIzaSyBYIW9QkmglehhlXgrW5x_alVxaeJy-efQ";
     @Override
     public void onCreate() {
         super.onCreate();
