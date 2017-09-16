@@ -95,7 +95,7 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
             }
             Toast.makeText(this, "총 거리 : "+totalDistance, Toast.LENGTH_SHORT).show();
             fragment.setTotalDistance(totalDistance);
-            fragment.drawPath(positions);
+            fragment.drawPath(markInfoes);
         }).subscribe(success->{
 
         },fail->{

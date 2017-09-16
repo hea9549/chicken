@@ -1,6 +1,7 @@
 package com.nene.chicken.Presentation.Presenter;
 
 import com.nene.chicken.Model.TransPosition;
+import com.nene.chicken.Presentation.Activity.MarkInfo;
 import com.nhn.android.maps.maplib.NGeoPoint;
 
 import java.util.List;
@@ -12,6 +13,6 @@ import java.util.List;
 public interface MainMapPresenter {
     void setView(View view);
     interface View extends BaseViewPresenter{
-        void drawPath(List<TransPosition> positions);
+        void drawPath(List<MarkInfo> positions);
     }
 }

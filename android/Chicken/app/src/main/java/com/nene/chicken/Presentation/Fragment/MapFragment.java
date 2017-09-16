@@ -13,6 +13,7 @@ import com.nene.chicken.AppApplication;
 import com.nene.chicken.Model.TransPosition;
 import com.nene.chicken.NMap.NMapViewerResourceProvider;
 import com.nene.chicken.Presentation.Activity.MainActivity;
+import com.nene.chicken.Presentation.Activity.MarkInfo;
 import com.nene.chicken.Presentation.Presenter.MainMapPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenterImpl;
@@ -23,6 +24,7 @@ import com.nhn.android.maps.NMapController;
 import com.nhn.android.maps.NMapLocationManager;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
+import com.nhn.android.maps.maplib.NMapConverter;
 import com.nhn.android.maps.nmapmodel.NMapError;
 import com.nhn.android.maps.overlay.NMapPathData;
 import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
@@ -41,7 +43,7 @@ import rx.schedulers.Schedulers;
  * Created by ParkHaeSung on 2017-09-16.
  */
 
-public class MapFragment extends ChickenBaseFragment implements MainMapPresenter.View{
+public class MapFragment extends ChickenBaseFragment implements MainMapPresenter.View {
 
     private NMapContext mMapContext;
     private NMapLocationManager locationManager;
@@ -93,7 +95,6 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
 
             @Override
             public void onMapCenterChange(NMapView nMapView, NGeoPoint nGeoPoint) {
-                mapController.setMapCenter(nGeoPoint);
             }
 
             @Override
@@ -121,7 +122,7 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
                     if (locationManager.isMyLocationEnabled()) {
                         mySpeed = presenter.getSpeed(locationManager.getMyLocation());
                         Log.e("속도당", "내 평균 속도 : " + mySpeed);
-                        ((MainActivity)getActivity()).setSpeed(mySpeed);
+                        ((MainActivity) getActivity()).setSpeed(mySpeed);
                         mapController.setMapCenter(locationManager.getMyLocation());
                     }
                 }, fail -> Log.e("ERROR IN TICK", "error in tick =" + fail.toString()));
@@ -170,30 +171,50 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
     }
 
     @Override
-    public void drawPath(List<TransPosition> positions) {
-        NMapPathData pathData = new NMapPathData(positions.size());
+    public void drawPath(List<MarkInfo> positions) {
+        int posCount = 0;
+        for (int i = 0; i < positions.size(); i++) {
+            try {
+                String pathJson = positions.get(i).getPathJson();
+                String[] coorJson = pathJson.split(" ");
+                if (coorJson[0].isEmpty())continue;
+                posCount+=(coorJson.length);
+            } catch (Exception e) {
+            }
+        }
+        NMapPathData pathData = new NMapPathData(posCount);
 
         pathData.initPathData();
-        for(int i=0;i<positions.size();i++)
-        {
-            pathData.addPathPoint(positions.get(i).getLongitude(), positions.get(i).getLatitude(), 0);
+        for (int i = 0; i < positions.size()-1; i++) {
+            try {
+                String pathJson = positions.get(i).getPathJson();
+                if (pathJson.isEmpty())continue;
+                String[] coorJson = pathJson.split(" ");
+                for (int j = 0; j < coorJson.length; j++) {
+                    NGeoPoint np = NMapConverter.utmK2Grs(Integer.valueOf(coorJson[j].split(",")[0]), Integer.valueOf(coorJson[j].split(",")[1]));
+                    pathData.addPathPoint(np.getLongitude(), np.getLatitude(), 0);
+                }
+            } catch (Exception e) {
+                Log.e("앙댕","exception = "+e.toString());
+            }
         }
         pathData.endPathData();
         NMapPathDataOverlay pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
+        pathDataOverlay.set
     }
 
     public void setTotalDistance(double totalDistance) {
         this.totalDistance = totalDistance;
-        if(mySpeed < 0.3){
+        if (mySpeed < 0.3) {
             Observable.just("retry")
-                    .delay(2,TimeUnit.SECONDS)
+                    .delay(2, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(s -> {
                         setTotalDistance(totalDistance);
-                    },fa->Log.e("또","실패냐= "+fa.toString()));
+                    }, fa -> Log.e("또", "실패냐= " + fa.toString()));
             return;
         }
-        ((MainActivity)getActivity()).setTakeTime((int)(totalDistance/mySpeed/60));
+        ((MainActivity) getActivity()).setTakeTime((int) (totalDistance / mySpeed / 60));
     }
 }

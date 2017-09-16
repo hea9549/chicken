@@ -7,9 +7,14 @@ import java.io.Serializable;
  */
 
 public class MarkInfo implements Serializable{
-    public MarkInfo(int mapx, int mapy) {
+    private String pathJson;
+    private int mapx;
+    private int mapy;
+    private int 
+    public MarkInfo(int mapx, int mapy, String pathJson) {
         this.mapx = mapx;
         this.mapy = mapy;
+        this.pathJson = pathJson;
     }
 
     public int getMapx() {
@@ -20,6 +25,11 @@ public class MarkInfo implements Serializable{
         return mapy;
     }
 
-    private int mapx;
-    private int mapy;
+    public String getPathJson() {
+        return pathJson;
+    }
+
+    public void setPathJson(String pathJson) {
+        this.pathJson = pathJson;
+    }
 }
