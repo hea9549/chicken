@@ -23,6 +23,20 @@ public class DistanceUtil {
         return totalDistance;
     }
 
+    public static double calcDistance(double startLat, double startLng, double endLat,double endLng){
+        double lat1 = startLat,lon1 = startLng,lat2=endLat,lon2=endLng;
+        double theta, dist;
+        theta = lon1 - lon2;
+        dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+
+        dist = dist * 60 * 1.1515;
+        dist = dist * 1.609344;    // 단위 mile 에서 km 변환.
+        dist = dist * 1000.0;
+        return dist;
+    }
     public static double calDistance(TransPosition p1, TransPosition p2){
         double lat1 = p1.getLatitude(),lon1 = p1.getLongitude(),lat2=p2.getLatitude(),lon2=p2.getLongitude();
         double theta, dist;

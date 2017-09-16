@@ -1,5 +1,7 @@
 package com.nene.chicken.Service;
 
+import android.util.Log;
+
 import com.nene.chicken.Model.HeightResponse;
 import com.nene.chicken.Model.TransPosition;
 import com.nene.chicken.Retrofit.DistanceRetrofitService;
@@ -39,11 +41,14 @@ public class DistanceServiceImpl implements DistanceService {
     public Observable<HeightResponse> getHeight(TransPosition position) {
         return RetrofitGenerator.createService(DistanceRetrofitService.class)
                 .getHeightObservable(
-                        "http://maps.googleapis.com/maps/api/elevation/json?locations=" + position.getLatitude() + "," +
-                                position.getLongitude() + "&sensor=false"
+                        "https://maps.googleapis.com/maps/api/elevation/json?locations=" + position.getLatitude() + "," +
+                                position.getLongitude() + "&sensor=false&key=AIzaSyBIpPdFNpjdhLSxYZULa6Uv1QGDaXPOmGM"
                 )
                 .doOnNext(result->{
-                    if (result.getResults().size() == 0)return;
+                    if (result.getResults().size() == 0){
+                        Log.e("error","error in get height = "+result.getStatus());
+                        return;
+                    }
                         position.setHeight(result.getResults().get(0).getElevation());
                 })
                 .observeOn(AndroidSchedulers.mainThread())

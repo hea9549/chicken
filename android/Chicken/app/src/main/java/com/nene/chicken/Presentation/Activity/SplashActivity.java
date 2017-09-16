@@ -19,7 +19,7 @@ public class SplashActivity extends ChickenBaseActivity {
                 .setPermissionListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted() {
-                        navigateActivity(MainActivity.class);
+                        navigateActivity(ChooseLocationActivity.class);
                     }
 
                     @Override

@@ -167,7 +167,7 @@ public class ChooseLocationActivity extends Activity {
                         for(int j =0; j < pointArray.length();j++){
                             Log.d("markInfo  in pointArray", pointArray.getString(j));
                             JSONObject pointObject = new JSONObject(pointArray.getString(j));
-                            markInfoList.add(new MarkInfo(pointObject.getInt("x"), pointObject.getInt("y")));
+                            markInfoList.add(new MarkInfo(pointObject.getInt("x"), pointObject.getInt("y"), pointObject.getString("path")));
                         }
 
                     }

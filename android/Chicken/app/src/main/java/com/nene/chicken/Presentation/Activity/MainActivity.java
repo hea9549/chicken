@@ -1,23 +1,14 @@
 package com.nene.chicken.Presentation.Activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.nene.chicken.AppApplication;
-import com.nene.chicken.Model.HeightResponse;
+
 import com.nene.chicken.Model.TransPosition;
 import com.nene.chicken.Presentation.Fragment.MapFragment;
 import com.nene.chicken.Presentation.Presenter.MainPresenter;
@@ -25,12 +16,9 @@ import com.nene.chicken.R;
 import com.nene.chicken.Service.DistanceService;
 import com.nene.chicken.Service.DistanceServiceImpl;
 import com.nene.chicken.Util.DistanceUtil;
-import com.nene.chicken.Util.GeoTrans;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.maplib.NMapConverter;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends ChickenBaseActivity implements MainPresenter.View {
     MainPresenter presenter;
@@ -86,25 +75,55 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
             positions.add(new TransPosition(n.getLatitude(),n.getLongitude()));
         }
         DistanceService distanceService = new DistanceServiceImpl();
-        Observable<HeightResponse> heightObservable = distanceService.getHeight(positions.get(0));
-        for(int i = 1 ; i < positions.size();i++){
-            heightObservable.concatWith(
-                    distanceService.getHeight(positions.get(i))
-            );
+        for(int i = 0 ; i < positions.size();i++){
+            distanceService.getHeight(positions.get(i)).subscribe();
         }
-        heightObservable.doOnCompleted(()->{
-            Toast.makeText(this, "모두계산햇찌롱!", Toast.LENGTH_SHORT).show();
-            for(int i = 0 ; i <positions.size()-1;i++){
-                totalDistance+=DistanceUtil.calDistance(positions.get(i),positions.get(i+1));
-            }
-            Toast.makeText(this, "총 거리 : "+totalDistance, Toast.LENGTH_SHORT).show();
-            fragment.setTotalDistance(totalDistance);
-            fragment.drawPath(positions);
-        }).subscribe(success->{
 
-        },fail->{
-            Log.e("에러에러","왜? "+fail.toString());
-        });
+        Observable.just("start!!")
+                .delay(5,TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s->{
+                    Toast.makeText(this, "모두계산햇찌롱!", Toast.LENGTH_SHORT).show();
+                    double totalHeightSum = 0;
+                    for(int i = 0 ; i < positions.size()-1;i++){
+                        totalHeightSum +=Math.abs(positions.get(i).getHeight()-positions.get(i+1).getHeight());
+                    }
+                    List<TransPosition> allPathPositions = new ArrayList<>();
+                    for(int i = 0 ; i <markInfoes.size();i++){
+                        if (markInfoes.get(i).getPathPositions() == null)continue;
+                        allPathPositions.addAll(markInfoes.get(i).getPathPositions());
+                    }
+                    for(int i = 0 ; i<allPathPositions.size()-1;i++){
+                        allPathPositions.get(i).setHeight(totalHeightSum/markInfoes.size());
+                        allPathPositions.get(i+1).setHeight(totalHeightSum/markInfoes.size());
+                        totalDistance+=DistanceUtil.calDistance(allPathPositions.get(i),allPathPositions.get(i+1));
+                    }
+
+
+                    for (int i = 0 ; i < positions.size()-1;i++){
+                        double floorDistance = DistanceUtil.calcDistance(positions.get(i).getLatitude(),positions.get(i).getLongitude()
+                                ,positions.get(i+1).getLatitude(),positions.get(i+1).getLongitude());
+                        if ((positions.get(i+1).getHeight()-positions.get(i).getHeight())/floorDistance>0.0699268)markInfoes.get(i).inclineType = MarkInfo.INCLINE_HARD_ASCENT;
+                        else if ((positions.get(i+1).getHeight()-positions.get(i).getHeight())/floorDistance>0.017455)markInfoes.get(i).inclineType = MarkInfo.INCLINE_ASCENT;
+                        else if ((positions.get(i+1).getHeight()-positions.get(i).getHeight())/floorDistance<-0.0699268)markInfoes.get(i).inclineType = MarkInfo.INCLINE_HARD_DESCENT;
+                        else if ((positions.get(i+1).getHeight()-positions.get(i).getHeight())/floorDistance<-0.017455)markInfoes.get(i).inclineType = MarkInfo.INCLINE_ASCENT;
+                        else markInfoes.get(i).inclineType = MarkInfo.INCLINE_FLAT;
+                        Log.e("탄젠트값",""+i+"번째,"+((positions.get(i+1).getHeight()-positions.get(i).getHeight())/floorDistance));
+                        Log.e("탄젠트값",""+i+"번째 바닥,"+(floorDistance));
+                        Log.e("탄젠트값",""+i+"번째 높아치,"+((positions.get(i+1).getHeight()-positions.get(i).getHeight())));
+
+                        fragment.drawPath(markInfoes.get(i));
+                    }
+                    double floorDistance = DistanceUtil.calcDistance(positions.get(positions.size()-1).getLatitude(),positions.get(positions.size()-1).getLongitude()
+                            ,positions.get(positions.size()-2).getLatitude(),positions.get(positions.size()-2).getLongitude());
+                    if ((positions.get(positions.size()-1).getHeight()-positions.get(positions.size()-2).getHeight())/floorDistance>0.57735)markInfoes.get(positions.size()-1).inclineType = MarkInfo.INCLINE_ASCENT;
+                    else if ((positions.get(positions.size()-1).getHeight()-positions.get(positions.size()-2).getHeight())/floorDistance<-0.57735)markInfoes.get(positions.size()-1).inclineType = MarkInfo.INCLINE_DESCENT;
+                    else markInfoes.get(positions.size()-1).inclineType = MarkInfo.INCLINE_FLAT;
+
+                    Toast.makeText(this, "총 거리 : "+totalDistance, Toast.LENGTH_SHORT).show();
+                    fragment.setTotalDistance(totalDistance);
+                });
     }
 
 
