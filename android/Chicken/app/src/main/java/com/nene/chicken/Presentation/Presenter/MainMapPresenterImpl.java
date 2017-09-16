@@ -13,12 +13,12 @@ import java.util.List;
  * Created by ParkHaeSung on 2017-09-16.
  */
 
-public class MainPresenterImpl implements MainPresenter {
+public class MainMapPresenterImpl implements MainMapPresenter {
     private View view;
     private DistanceService distanceService;
     private List<TransPosition> savePositions;
     private double curSpeed;
-    public MainPresenterImpl(){
+    public MainMapPresenterImpl(){
         distanceService = new DistanceServiceImpl();
         savePositions = new ArrayList<>();
     }
@@ -27,16 +27,5 @@ public class MainPresenterImpl implements MainPresenter {
         this.view = view;
     }
 
-    @Override
-    public double getSpeed(NGeoPoint point){
-        TransPosition transPosition = new TransPosition(point.getLatitude(),point.getLongitude());
-        savePositions.add(transPosition);
-        if(savePositions.size()==0) return 0;
-        if (savePositions.size()==20)savePositions.remove(0);
-        double totalMovedistance = 0;
-        for(int i = 0 ; i < savePositions.size()-1;i++){
-            totalMovedistance += DistanceUtil.calDistance(savePositions.get(i),savePositions.get(i+1));
-        }
-        return totalMovedistance/(savePositions.size()-1);
-    }
+
 }

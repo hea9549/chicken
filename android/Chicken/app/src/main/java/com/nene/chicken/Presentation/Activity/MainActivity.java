@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.nene.chicken.Model.TransPosition;
@@ -27,12 +28,21 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import butterknife.BindView;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class MainActivity extends ChickenBaseActivity implements MainPresenter.View {
     MainPresenter presenter;
     private NMapView mMapView;// 지도 화면 View
-
-
+    private EditText fromEditText;
+    private EditText toEditText;
+    private Button fromButton;
+    private Button toButton;
+    @BindView(R.id.mapContainer)
+    LinearLayout mapContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +54,7 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.mapContainer, fragment);
         fragmentTransaction.commit();
-//        Log.e("좌표", "" + NMapConverter.utmK2Grs(350111810, 149774298).getLatitude() + "," + NMapConverter.utmK2Grs(350111810, 149774298).getLongitude());
+
     }
 
     @Override

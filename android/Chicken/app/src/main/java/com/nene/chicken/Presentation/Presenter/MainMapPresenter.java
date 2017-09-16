@@ -9,13 +9,9 @@ import java.util.List;
  * Created by ParkHaeSung on 2017-09-16.
  */
 
-public interface MainPresenter {
+public interface MainMapPresenter {
     void setView(View view);
-
-    double getSpeed(NGeoPoint point);
-
     interface View extends BaseViewPresenter{
-
         void drawPath(List<TransPosition> positions);
     }
 }

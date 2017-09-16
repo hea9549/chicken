@@ -33,4 +33,17 @@ public class MyTest {
         System.out.println(""+distanceUtil.getTotalDistance(lists));
     }
 
+    @Test
+    public void distanceTest(){
+        TransPosition chungMain = new TransPosition(35.235805, 129.076234);
+        chungMain.setHeight(184.9628753662109);
+        TransPosition chungTop = new TransPosition(35.231686, 129.084002);
+        chungTop.setHeight(30.41781044006348);
+
+        System.out.println("높이있으면 거리 : "+DistanceUtil.calDistance(chungMain,chungTop));
+        chungMain.setHeight(0f);
+        chungTop.setHeight(0f);
+        System.out.println("높이없으면 거리 : "+DistanceUtil.calDistance(chungMain,chungTop));
+    }
+
 }
