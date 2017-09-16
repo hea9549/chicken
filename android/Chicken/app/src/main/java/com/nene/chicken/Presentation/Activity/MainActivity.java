@@ -14,6 +14,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nene.chicken.AppApplication;
@@ -23,6 +25,7 @@ import com.nene.chicken.Presentation.Presenter.BaseViewPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenterImpl;
 import com.nene.chicken.R;
+import com.nene.chicken.Util.GeoTrans;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGPoint;
 import com.nhn.android.maps.maplib.NGeoPoint;
@@ -50,6 +53,16 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
     private Button toButton;
     @BindView(R.id.mapContainer)
     LinearLayout mapContainer;
+    @BindView(R.id.tv_startTime)
+    TextView tv_startTime;
+    @BindView(R.id.tv_endTime)
+    TextView tv_endTime;
+    @BindView(R.id.tv_speed)
+    TextView tv_speed;
+    @BindView(R.id.tv_takeTime)
+    TextView tv_takeTime;
+    @BindView(R.id.wrapper_info)
+    RelativeLayout wrapper_info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +76,6 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.mapContainer, fragment);
         fragmentTransaction.commit();
-        Log.e("좌표", "" + NMapConverter.utmK2Grs(350111810, 149774298).getLatitude() + "," + NMapConverter.utmK2Grs(350111810, 149774298).getLongitude());
     }
 
 
@@ -73,6 +85,7 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
     }
 
     private void setLayout(){
+
         fromEditText = (EditText)findViewById(R.id.editText);
         toEditText = (EditText)findViewById(R.id.editText2);
         fromButton = (Button) findViewById(R.id.button2);
@@ -138,5 +151,21 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
     private void hideKeyboard(){
         InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    public void setStartTime(String time){
+        tv_startTime.setText(time+" ~");
+    }
+
+    public void setEndTime(String endTime){
+        tv_endTime.setText(endTime);
+    }
+
+    public void setSpeed(double meterPerSec){
+        tv_speed.setText(String.format("%.2f m/s",meterPerSec));
+    }
+
+    public void setTakeTime(int min){
+        tv_takeTime.setText(""+min+"Min");
     }
 }

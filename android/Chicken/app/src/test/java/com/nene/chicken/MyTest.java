@@ -2,6 +2,8 @@ package com.nene.chicken;
 
 import com.nene.chicken.Model.TransPosition;
 import com.nene.chicken.Util.DistanceUtil;
+import com.nene.chicken.Util.GeoTrans;
+import com.nene.chicken.Util.GeoTransPoint;
 import com.nhn.android.maps.maplib.NMapConverter;
 
 import org.junit.Test;
@@ -46,4 +48,12 @@ public class MyTest {
         System.out.println("높이없으면 거리 : "+DistanceUtil.calDistance(chungMain,chungTop));
     }
 
+    @Test
+    public void geoTransTest(){
+        GeoTransPoint oKA = new GeoTransPoint(309252, 550759);
+        GeoTransPoint oGeo = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, oKA);
+        Double lat = oGeo.getY();
+        Double lng = oGeo.getX();
+        System.out.println("lat = "+lat+",lng = "+lng);
+    }
 }
