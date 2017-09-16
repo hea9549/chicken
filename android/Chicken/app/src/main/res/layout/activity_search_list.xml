@@ -9,9 +9,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="60dp"
+        android:background="#86ABBA">
 
         <Button
+            android:id="@+id/back_Button"
             android:layout_width="70dp"
             android:layout_height="70dp" />
 
@@ -19,7 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="find Route"/>
+            android:textColor="#ffffff"
+            android:textSize="19dp"
+            android:text="장소"/>
 
     </RelativeLayout>
 
