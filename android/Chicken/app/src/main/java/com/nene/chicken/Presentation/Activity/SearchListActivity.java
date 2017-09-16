@@ -61,13 +61,12 @@ public class SearchListActivity extends Activity {
             int mapx = searchResultInfoList.get(position).getMapx();
             int mapy = searchResultInfoList.get(position).getMapy();
 
-            Toast.makeText(SearchListActivity.this,"this x : " + mapx, Toast.LENGTH_SHORT);
+            Intent intent = new Intent();
+            intent.putExtra("mapx",mapx);
+            intent.putExtra("mapy",mapy);
+            setResult(RESULT_OK, intent);
 
-//            Intent intent = new Intent(SettingFAQActivity.this, SettingFAQ01Activity.class);
-//            intent.putExtra("title",title);
-//            intent.putExtra("contents",contents);
-//
-//            startActivity(intent);
+            finish();
 
         }
     };

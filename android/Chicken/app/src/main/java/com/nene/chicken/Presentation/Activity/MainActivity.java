@@ -60,6 +60,27 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         // 화면그리기 작성해야함
     }
 
+    public static final int M_ACTIVITY_RESULT = 1;
+
+    //SearchListActivity가 종료된 이후 아래 함수에서 데이터를 수신
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode)           // Request code send from "startActivityForResult" function
+            {
+                case M_ACTIVITY_RESULT: {
+                    int mapx = data.getIntExtra("mapx", -1);
+                    int mapy = data.getIntExtra("mapy", -1);
+
+                    String rea = "mapx : " + mapx;
+                    Toast.makeText(MainActivity.this, rea, Toast.LENGTH_SHORT).show();
+
+                }break;
+            }
+        }
+    }
+
     private void setLayout(){
         fromEditText = (EditText)findViewById(R.id.from_EditText);
         toEditText = (EditText)findViewById(R.id.to_EditText);
@@ -73,7 +94,7 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
                 hideKeyboard();
                 Intent intent = new Intent(MainActivity.this, SearchListActivity.class);
                 intent.putExtra("query",query);
-                startActivity(intent);
+                startActivityForResult(intent, M_ACTIVITY_RESULT);
             }
         });
 
