@@ -74,11 +74,13 @@ public class ChooseLocationActivity extends Activity {
                 case FROM_ACTIVITY_RESULT: {
                     mapxFrom = data.getIntExtra("mapxFrom", -1);
                     mapyFrom = data.getIntExtra("mapyFrom", -1);
+                    fromEditText.setText(data.getStringExtra("title"));
                     break;
                 }
                 case TO_ACTIVITY_RESULT: {
                     mapxTo = data.getIntExtra("mapxTo", -1);
                     mapyTo = data.getIntExtra("mapyTo", -1);
+                    toEditText.setText(data.getStringExtra("title"));
                     break;
                 }
             }
@@ -175,6 +177,8 @@ public class ChooseLocationActivity extends Activity {
                     Intent intent = new Intent(ChooseLocationActivity.this, MainActivity.class);
                     intent.putExtra("totalDistance",totalDistance);
                     intent.putExtra("markInfoList",markInfoList);
+                    intent.putExtra("fromTitle",fromEditText.getText().toString());
+                    intent.putExtra("toTitle",toEditText.getText().toString());
                     startActivity(intent);
 
                 } catch (JSONException e) {

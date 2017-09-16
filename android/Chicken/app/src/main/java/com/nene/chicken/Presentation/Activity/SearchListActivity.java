@@ -62,8 +62,10 @@ public class SearchListActivity extends Activity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
             int mapx = searchResultInfoList.get(position).getMapx();
             int mapy = searchResultInfoList.get(position).getMapy();
+            String title = searchResultInfoList.get(position).getTitle();
 
             Intent intent = new Intent();
+            intent.putExtra("title",title);
             if(type == 1){
                 intent.putExtra("mapxFrom",mapx);
                 intent.putExtra("mapyFrom",mapy);
@@ -108,6 +110,9 @@ public class SearchListActivity extends Activity {
                         tempObject = new JSONObject(tempString);
 
                         String title = tempObject.getString("title");
+                        title = title.replace("<b>","");
+                        title = title.replace("</b>","");
+
                         String roadAddress = tempObject.getString("roadAddress");
                         int mapx = tempObject.getInt("mapx");
                         int mapy = tempObject.getInt("mapy");
