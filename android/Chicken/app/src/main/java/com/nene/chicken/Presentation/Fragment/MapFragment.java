@@ -218,5 +218,6 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
         if (markInfo.inclineType == MarkInfo.INCLINE_HARD_DESCENT){
             pathDataOverlay.setLineColor(Color.rgb(0,0,255),100);
         }
+        pathDataOverlay.showAllPathData(0);
     }
 }
