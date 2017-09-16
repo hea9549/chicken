@@ -36,6 +36,8 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
     private Button fromButton;
     private Button toButton;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,11 +68,12 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         fromButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String query = fromEditText.getText().toString();
+
                 hideKeyboard();
-                searchPosition();
-//                findRoute();
-//                Intent intent = new Intent(MainActivity.this, SearchListActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, SearchListActivity.class);
+                intent.putExtra("query",query);
+                startActivity(intent);
             }
         });
 
@@ -85,44 +88,6 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         });
     }
 
-    private void searchPosition(){
-        String query = fromEditText.getText().toString();
-
-        try {
-            query = URLEncoder.encode(query,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        String url = "query=" + query + "&display=10&start=1&sort=random";
-
-        Communicator.getHttp(2, url, new Handler() {
-            public void handleMessage(Message msg) {
-
-                String jsonString = msg.getData().getString("jsonString");
-                Log.d("jsonString",jsonString);
-//                try {
-//                    JSONObject dataObject = new JSONObject(jsonString);
-//                    String result = dataObject.getString("result");
-//
-//                    JSONObject dataObject2 = new JSONObject(result);
-//                    String summary = dataObject2.getString("summary");
-//
-//                    Log.d("yurimmm summary", result);
-//                    JSONObject  tempObject = new JSONObject(summary);
-//
-//                    int totalDistance = tempObject.getInt("totalDistance");
-//                    String toastString = totalDistance + " distance";
-//
-//                    Toast.makeText(MainActivity.this, toastString , Toast.LENGTH_SHORT).show();
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-
-            }
-        });
-    }
 
     private void findRoute(){
         double startLa = 127.6433222;
