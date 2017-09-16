@@ -15,71 +15,90 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="19dp"
-            android:text="find Route"/>
+            android:text="길찾기"
+            android:textColor="#86ABBA"
+            android:textSize="19dp" />
 
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginTop="200dp"
+        android:orientation="vertical">
 
-
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:gravity="center"
-            android:textSize="13dp"
-            android:text="from"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="13dp"
+                android:textColor="#86ABBA"
+                android:text="from"/>
 
 
-        <EditText
-            android:id="@+id/from_EditText"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:inputType="textNoSuggestions"
-            android:maxLines="1"
-            android:textSize="13dp" />
+            <EditText
+                android:id="@+id/from_EditText"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="#86ABBA"
+                android:textSize="20dp" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/search" />
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/search" />
 
+        </LinearLayout>
 
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:background="#86ABBA"/>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:gravity="center"
-            android:text="to"
-            android:textSize="13dp" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/to_EditText"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:inputType="textNoSuggestions"
-            android:maxLines="1"
-            android:textSize="13dp" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#86ABBA"
+                android:text="to"
+                android:textSize="13dp" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/search" />
+            <EditText
+                android:id="@+id/to_EditText"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:maxLines="1"
+                android:gravity="center"
+                android:textColor="#86ABBA"
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/search" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <Button
