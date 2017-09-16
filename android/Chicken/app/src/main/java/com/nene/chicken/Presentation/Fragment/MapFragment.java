@@ -29,6 +29,8 @@ import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 import com.nhn.android.mapviewer.overlay.NMapPathDataOverlay;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -65,9 +67,10 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
         mMapViewerResourceProvider = new NMapViewerResourceProvider(getContext());
         mMapCompassManager = new NMapCompassManager(getActivity());
 
-// create overlay manager
-
-
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm");
+        ((MainActivity)getActivity()).setStartTime(format.format(date));
+        // create overlay manager
     }
 
     @Override
@@ -173,7 +176,7 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
 
     public void setTotalDistance(double totalDistance) {
         this.totalDistance = totalDistance;
-        if (mySpeed < 0.3) {
+        if (presenter.getPositionsSize()<15) {
             Observable.just("retry")
                     .delay(2, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
@@ -218,6 +221,7 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
         if (markInfo.inclineType == MarkInfo.INCLINE_HARD_DESCENT){
             pathDataOverlay.setLineColor(Color.rgb(0,0,255),100);
         }
-        pathDataOverlay.showAllPathData(8);
+        pathDataOverlay.setLineWidth(4.0f);
+        pathDataOverlay.showAllPathData(10);
     }
 }

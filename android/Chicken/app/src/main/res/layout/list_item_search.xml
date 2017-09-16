@@ -1,60 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="70dp"
+    android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/dist_TextView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="94km"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/title_TextView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="search result"
-                android:layout_weight="1"/>
-
-            <TextView
-                android:id="@+id/address_TextView"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:gravity="center_vertical"
-                android:text="search result"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="#eeeeee"/>
-
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:src="@drawable/where" />
+
+        <TextView
+            android:id="@+id/dist_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="94km"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="search result"
+            android:textColor="#4d4d4d"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/address_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@id/title_TextView"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="search result"
+            android:textColor="#b3b3b3"
+            android:textSize="14dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#eeeeee" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/arrow" />
+    </RelativeLayout>
 
 
 </LinearLayout>

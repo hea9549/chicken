@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.nene.chicken.Model.TransPosition;
@@ -27,12 +28,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChooseLocationActivity extends Activity {
+public class ChooseLocationActivity extends ChickenBaseActivity {
 
     private EditText fromEditText;
     private EditText toEditText;
-    private Button fromButton;
-    private Button toButton;
+    private ImageButton fromButton;
+    private ImageButton toButton;
     private Button findButton;
 
     private int mapxFrom;
@@ -91,7 +92,7 @@ public class ChooseLocationActivity extends Activity {
         fromEditText = (EditText)findViewById(R.id.from_EditText);
         toEditText = (EditText)findViewById(R.id.to_EditText);
 
-        fromButton = (Button) findViewById(R.id.button2);
+        fromButton = (ImageButton) findViewById(R.id.button2);
         fromButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +106,7 @@ public class ChooseLocationActivity extends Activity {
             }
         });
 
-        toButton = (Button) findViewById(R.id.button);
+        toButton = (ImageButton) findViewById(R.id.button);
         toButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Presentation.Activity.MainActivity"></activity>
+        <activity android:name=".Presentation.Activity.MainActivity" />
         <activity android:name=".Presentation.Activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Presentation.Activity.SearchListActivity" />
-        <activity android:name=".Presentation.Activity.ChooseLocationActivity">
-
-
-        </activity>
+        <activity android:name=".Presentation.Activity.ChooseLocationActivity"></activity>
+        <activity android:name=".Presentation.Activity.MyInfoActivity"></activity>
     </application>
 
 </manifest>
