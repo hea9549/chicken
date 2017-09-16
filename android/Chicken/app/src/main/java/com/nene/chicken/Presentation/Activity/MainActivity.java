@@ -86,8 +86,7 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         double destLa = 127.6423415;
         double destLo = 37.7944884;
 
-
-        String url = "start=" +startLa +","+startLo+"&destination="+destLa+","+destLo;
+        String url = "start=" + startLa + "," + startLo + "&destination=" + destLa + "," + destLo;
 
         Communicator.getHttp(url, new Handler() {
             public void handleMessage(Message msg) {
@@ -98,8 +97,6 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
                     JSONObject dataObject = new JSONObject(jsonString);
                     String result = dataObject.getString("result");
 
-                    Log.d("yurimmm result", result);
-
                     JSONObject dataObject2 = new JSONObject(result);
                     String summary = dataObject2.getString("summary");
 
@@ -107,10 +104,8 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
                     JSONObject  tempObject = new JSONObject(summary);
 
                     int totalDistance = tempObject.getInt("totalDistance");
-
-
-                    Log.d("yurimmm totalDistance", totalDistance+"");
                     String toastString = totalDistance + " distance";
+                    
                     Toast.makeText(MainActivity.this, toastString , Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
