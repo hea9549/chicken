@@ -34,8 +34,7 @@ public class MainPresenterImpl implements MainPresenter {
         if(savePositions.size()==0) return 0;
         double totalMovedistance = 0;
         for(int i = 0 ; i < savePositions.size()-1;i++){
-            totalMovedistance += DistanceUtil.calDistance(savePositions.get(i).getLatitude(),savePositions.get(i).getLongitude(),
-                    savePositions.get(i+1).getLatitude(),savePositions.get(i+1).getLongitude());
+            totalMovedistance += DistanceUtil.calDistance(savePositions.get(i),savePositions.get(i+1));
         }
         return totalMovedistance/(savePositions.size()-1);
     }

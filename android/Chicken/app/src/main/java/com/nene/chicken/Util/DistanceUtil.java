@@ -23,7 +23,8 @@ public class DistanceUtil {
         return totalDistance;
     }
 
-    public static double calDistance(double lat1, double lon1, double lat2, double lon2){
+    public static double calDistance(TransPosition p1, TransPosition p2){
+        double lat1 = p1.getLatitude(),lon1 = p1.getLongitude(),lat2=p2.getLatitude(),lon2=p2.getLatitude();
         double theta, dist;
         theta = lon1 - lon2;
         dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1))
@@ -35,7 +36,7 @@ public class DistanceUtil {
         dist = dist * 1.609344;    // 단위 mile 에서 km 변환.
         dist = dist * 1000.0;      // 단위  km 에서 m 로 변환
 
-        return dist;
+        return Math.sqrt(Math.pow(dist,2)+Math.pow(Math.abs(p1.getHeight()-p2.getHeight()),2));
     }
 
     // 주어진 도(degree) 값을 라디언으로 변환
