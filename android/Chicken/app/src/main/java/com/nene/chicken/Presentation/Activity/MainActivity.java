@@ -105,9 +105,9 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
                         double floorDistance = DistanceUtil.calcDistance(positions.get(i).getLatitude(),positions.get(i).getLongitude()
                                 ,positions.get(i+1).getLatitude(),positions.get(i+1).getLongitude());
                         if ((positions.get(i+1).getHeight()-positions.get(i).getHeight())/floorDistance>0.0699268)markInfoes.get(i).inclineType = MarkInfo.INCLINE_HARD_ASCENT;
-                        else if ((positions.get(i+1).getHeight()-positions.get(i).getHeight())/floorDistance>0.017455)markInfoes.get(i).inclineType = MarkInfo.INCLINE_ASCENT;
+                        else if ((positions.get(i+1).getHeight()-positions.get(i).getHeight())/floorDistance>0.0261859)markInfoes.get(i).inclineType = MarkInfo.INCLINE_ASCENT;
                         else if ((positions.get(i+1).getHeight()-positions.get(i).getHeight())/floorDistance<-0.0699268)markInfoes.get(i).inclineType = MarkInfo.INCLINE_HARD_DESCENT;
-                        else if ((positions.get(i+1).getHeight()-positions.get(i).getHeight())/floorDistance<-0.017455)markInfoes.get(i).inclineType = MarkInfo.INCLINE_ASCENT;
+                        else if ((positions.get(i+1).getHeight()-positions.get(i).getHeight())/floorDistance<-0.0261859)markInfoes.get(i).inclineType = MarkInfo.INCLINE_ASCENT;
                         else markInfoes.get(i).inclineType = MarkInfo.INCLINE_FLAT;
                         Log.e("탄젠트값",""+i+"번째,"+((positions.get(i+1).getHeight()-positions.get(i).getHeight())/floorDistance));
                         Log.e("탄젠트값",""+i+"번째 바닥,"+(floorDistance));
