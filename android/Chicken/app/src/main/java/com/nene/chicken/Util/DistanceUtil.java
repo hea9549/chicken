@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class DistanceUtil {
-    public double getTotalDistance(List<TransPosition> positions) {
+    public static double getTotalDistance(List<TransPosition> positions) {
         double totalDistance = 0;
         if (positions == null) return -1;
         if (positions.size() == 0) return -1;

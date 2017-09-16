@@ -7,13 +7,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.nene.chicken.AppApplication;
+import com.nene.chicken.Presentation.Presenter.MainPresenter;
+import com.nene.chicken.Presentation.Presenter.MainPresenterImpl;
 import com.nene.chicken.R;
 import com.nhn.android.maps.NMapContext;
+import com.nhn.android.maps.NMapController;
+import com.nhn.android.maps.NMapLocationManager;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
+
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by ParkHaeSung on 2017-09-16.
@@ -22,46 +33,39 @@ import com.nhn.android.maps.nmapmodel.NMapError;
 public class MapFragment extends Fragment {
 
     private NMapContext mMapContext;
+    private NMapLocationManager locationManager;
+    private NMapView mapView;
+    private MainPresenter presenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMapContext = new NMapContext(super.getActivity());
         mMapContext.onCreate();
+        presenter = new MainPresenterImpl();
+        locationManager = new NMapLocationManager(getContext());
+        locationManager.enableMyLocation(true);
+        Observable.timer(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(tick -> {
+                    if (locationManager.isMyLocationEnabled())
+                        Toast.makeText(getContext(), "내 속도 : "+presenter.getSpeed(locationManager.getMyLocation()), Toast.LENGTH_SHORT).show();
+                }, fail -> Log.e("ERROR IN TICK", "error in tick =" + fail.toString()));
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        NMapView mapView = (NMapView) getView().findViewById(R.id.fragment_map);
+        mapView = (NMapView) getView().findViewById(R.id.fragment_map);
         mapView.setClientId(AppApplication.NAVER_CLIENT_ID);// 클라이언트 아이디 설정
+        mapView.setClickable(true);
+        mapView.setEnabled(true);
+        mapView.setFocusable(true);
+        mapView.setFocusableInTouchMode(true);
+        mapView.requestFocus();
         mMapContext.setupMapView(mapView);
-        mapView.setOnMapStateChangeListener(new NMapView.OnMapStateChangeListener() {
-            @Override
-            public void onMapInitHandler(NMapView nMapView, NMapError nMapError) {
 
-            }
-
-            @Override
-            public void onMapCenterChange(NMapView nMapView, NGeoPoint nGeoPoint) {
-
-            }
-
-            @Override
-            public void onMapCenterChangeFine(NMapView nMapView) {
-
-            }
-
-            @Override
-            public void onZoomLevelChange(NMapView nMapView, int i) {
-
-            }
-
-            @Override
-            public void onAnimationStateChange(NMapView nMapView, int i, int i1) {
-
-            }
-        });
     }
 
     @Override
