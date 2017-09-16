@@ -27,20 +27,12 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.e("좌표","" + NMapConverter.utmK2Grs(350111810, 149774298).getLatitude() + "," + NMapConverter.utmK2Grs(350111810, 149774298).getLongitude());
+
     }
 
+
     @Override
-    public void drawPath(List<TransPosition> positions){
-        // 화면그리기 작성해야함
-        NMapPathData pathData = new NMapPathData(positions.size());
+    public void drawPath(List<TransPosition> positions) {
 
-        pathData.initPathData();
-        for(int i=0;i<positions.size();i++)
-        {
-            pathData.addPathPoint(positions.get(i).getLongitude(), positions.get(i).getLatitude(), 0);
-        }
-        pathData.endPathData();
-
-        NMapPathDataOverlay pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
     }
 }
