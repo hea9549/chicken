@@ -19,7 +19,8 @@
             android:layout_height="50dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:hint="출발지" />
+            android:hint="출발지"
+            android:maxLines="1" />
 
         <Button
             android:id="@+id/button2"
@@ -42,6 +43,7 @@
             android:id="@+id/to_EditText"
             android:layout_width="200dp"
             android:layout_height="50dp"
+            android:maxLines="1"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:hint="도착지" />
