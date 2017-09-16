@@ -36,10 +36,10 @@ public class ChooseLocationActivity extends ChickenBaseActivity {
     private ImageButton toButton;
     private Button findButton;
 
-    private int mapxFrom;
-    private int mapyFrom;
-    private int mapxTo;
-    private int mapyTo;
+    private int mapxFrom = -1;
+    private int mapyFrom = -1;
+    private int mapxTo = -1;
+    private int mapyTo = -1;
 
     private int totalDistance;
 
@@ -130,6 +130,11 @@ public class ChooseLocationActivity extends ChickenBaseActivity {
     }
 
     private void findRoute(){
+
+        if(mapxFrom == -1 || mapyFrom == -1 || mapxTo == -1 || mapyTo == -1){
+            Toast.makeText(this, "검색을 통해 주소를 선택하세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         markInfoList.clear();
 
