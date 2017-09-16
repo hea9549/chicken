@@ -35,7 +35,18 @@
     <ListView
         android:id="@+id/search_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
     </ListView>
+
+    <TextView
+        android:id="@+id/content_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:text="해당하는 검색 결과가 없습니다"
+        android:textColor="#4d4d4d"
+        android:textSize="16dp" />
 </LinearLayout>

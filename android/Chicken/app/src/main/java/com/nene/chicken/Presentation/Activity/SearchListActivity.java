@@ -107,7 +107,7 @@ public class SearchListActivity extends ChickenBaseActivity {
 
                 searchResultInfoList.clear();
                 String jsonString = msg.getData().getString("jsonString");
-                Log.d("jsonString",jsonString);
+                Log.d("jsonString searchPos",jsonString);
 
                 try {
                     JSONObject dataObject = new JSONObject(jsonString);
@@ -116,22 +116,27 @@ public class SearchListActivity extends ChickenBaseActivity {
                     JSONArray itemArray = new JSONArray(itemList);
                     JSONObject tempObject;
 
-                    for (int i = 0; i < itemArray.length(); i++) {
-                        String tempString = itemArray.getString(i);
-                        tempObject = new JSONObject(tempString);
+                    if(itemArray.length() == 0){
+                        searchListView.setVisibility(View.GONE);
+                    }else {
+                        searchListView.setVisibility(View.VISIBLE);
 
-                        String title = tempObject.getString("title");
-                        title = title.replace("<b>","");
-                        title = title.replace("</b>","");
-                        title = title.replace("&amp;","");
+                        for (int i = 0; i < itemArray.length(); i++) {
+                            String tempString = itemArray.getString(i);
+                            tempObject = new JSONObject(tempString);
 
-                        String roadAddress = tempObject.getString("roadAddress");
-                        int mapx = tempObject.getInt("mapx");
-                        int mapy = tempObject.getInt("mapy");
+                            String title = tempObject.getString("title");
+                            title = title.replace("<b>", "");
+                            title = title.replace("</b>", "");
+                            title = title.replace("&amp;", "");
 
-                        searchResultInfoList.add(new SearchResultInfo(title, roadAddress, mapx, mapy));
+                            String roadAddress = tempObject.getString("roadAddress");
+                            int mapx = tempObject.getInt("mapx");
+                            int mapy = tempObject.getInt("mapy");
+
+                            searchResultInfoList.add(new SearchResultInfo(title, roadAddress, mapx, mapy));
+                        }
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
