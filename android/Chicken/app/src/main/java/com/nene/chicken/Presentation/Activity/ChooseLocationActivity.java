@@ -40,6 +40,8 @@ public class ChooseLocationActivity extends Activity {
     private int mapxTo;
     private int mapyTo;
 
+    private int totalDistance;
+
     private ArrayList<MarkInfo> markInfoList = new ArrayList<MarkInfo>();
 
     @Override
@@ -152,8 +154,7 @@ public class ChooseLocationActivity extends Activity {
                     JSONObject dataObject2 = new JSONObject(dataObject.getString("result"));
                     JSONObject summaryObject = new JSONObject(dataObject2.getString("summary"));
 
-                    int totalDistance = summaryObject.getInt("totalDistance");
-                    String toastString = totalDistance + " distance";
+                    totalDistance = summaryObject.getInt("totalDistance");
 
                     JSONArray routeArray = new JSONArray(dataObject2.getString("route"));
 
@@ -164,15 +165,17 @@ public class ChooseLocationActivity extends Activity {
                         for(int j =0; j < pointArray.length();j++){
                             Log.d("markInfo  in pointArray", pointArray.getString(j));
                             JSONObject pointObject = new JSONObject(pointArray.getString(j));
-                            JSONObject guideObject = new JSONObject(pointObject.getString("guide"));
-
                             markInfoList.add(new MarkInfo(pointObject.getInt("x"), pointObject.getInt("y")));
-                            
                         }
 
                     }
 
-                    Toast.makeText(ChooseLocationActivity.this, toastString , Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(ChooseLocationActivity.this, toastString , Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(ChooseLocationActivity.this, DrawPathActivity.class);
+                    intent.putExtra("totalDistance",totalDistance);
+                    intent.putExtra("markInfoList",markInfoList);
+                    startActivity(intent);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
