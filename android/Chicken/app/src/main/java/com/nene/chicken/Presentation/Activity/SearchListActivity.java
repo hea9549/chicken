@@ -29,6 +29,7 @@ import java.util.ArrayList;
 public class SearchListActivity extends Activity {
 
     private String query;
+    private int type;
     private SearchListAdapter searchListAdapter;
     private ListView searchListView;
     private ArrayList<SearchResultInfo> searchResultInfoList = new ArrayList<SearchResultInfo>();
@@ -40,6 +41,7 @@ public class SearchListActivity extends Activity {
 
         Intent intent = getIntent();
         query = intent.getStringExtra("query");
+        type = intent.getIntExtra("type",0);
 
         setLayout();
 
@@ -62,8 +64,13 @@ public class SearchListActivity extends Activity {
             int mapy = searchResultInfoList.get(position).getMapy();
 
             Intent intent = new Intent();
-            intent.putExtra("mapx",mapx);
-            intent.putExtra("mapy",mapy);
+            if(type == 1){
+                intent.putExtra("mapxFrom",mapx);
+                intent.putExtra("mapyFrom",mapy);
+            }else{
+                intent.putExtra("mapxTo",mapx);
+                intent.putExtra("mapyTo",mapy);
+            }
             setResult(RESULT_OK, intent);
 
             finish();

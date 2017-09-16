@@ -36,14 +36,16 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
     private Button fromButton;
     private Button toButton;
 
-
+    private int mapxFrom;
+    private int mapyFrom;
+    private int mapxTo;
+    private int mapyTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setLayout();
-
         MapFragment fragment = new MapFragment();
         fragment.setArguments(new Bundle());
         FragmentManager fm = getSupportFragmentManager();
@@ -60,7 +62,8 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         // 화면그리기 작성해야함
     }
 
-    public static final int M_ACTIVITY_RESULT = 1;
+    public static final int FROM_ACTIVITY_RESULT = 1;
+    public static final int TO_ACTIVITY_RESULT = 2;
 
     //SearchListActivity가 종료된 이후 아래 함수에서 데이터를 수신
     @Override
@@ -69,14 +72,16 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         if (resultCode == RESULT_OK) {
             switch (requestCode)           // Request code send from "startActivityForResult" function
             {
-                case M_ACTIVITY_RESULT: {
-                    int mapx = data.getIntExtra("mapx", -1);
-                    int mapy = data.getIntExtra("mapy", -1);
-
-                    String rea = "mapx : " + mapx;
-                    Toast.makeText(MainActivity.this, rea, Toast.LENGTH_SHORT).show();
-
-                }break;
+                case FROM_ACTIVITY_RESULT: {
+                    mapxFrom = data.getIntExtra("mapxFrom", -1);
+                    mapyFrom = data.getIntExtra("mapyFrom", -1);
+                    break;
+                }
+                case TO_ACTIVITY_RESULT: {
+                    mapxTo = data.getIntExtra("mapxTo", -1);
+                    mapyTo = data.getIntExtra("mapyTo", -1);
+                    break;
+                }
             }
         }
     }
@@ -94,7 +99,8 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
                 hideKeyboard();
                 Intent intent = new Intent(MainActivity.this, SearchListActivity.class);
                 intent.putExtra("query",query);
-                startActivityForResult(intent, M_ACTIVITY_RESULT);
+                intent.putExtra("type",FROM_ACTIVITY_RESULT);
+                startActivityForResult(intent, FROM_ACTIVITY_RESULT);
             }
         });
 
@@ -102,9 +108,13 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         toButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String query = toEditText.getText().toString();
+
                 hideKeyboard();
                 Intent intent = new Intent(MainActivity.this, SearchListActivity.class);
-                startActivity(intent);
+                intent.putExtra("query",query);
+                intent.putExtra("type",TO_ACTIVITY_RESULT);
+                startActivityForResult(intent, TO_ACTIVITY_RESULT);
             }
         });
     }
