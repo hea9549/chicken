@@ -7,10 +7,27 @@
     android:orientation="vertical"
     tools:context="com.nene.chicken.Presentation.Activity.ChooseLocationActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="70dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="find Route"/>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <EditText
@@ -19,7 +36,8 @@
             android:layout_height="50dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:hint="출발지" />
+            android:hint="출발지"
+            android:maxLines="1" />
 
         <Button
             android:id="@+id/button2"
@@ -36,12 +54,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/to_EditText"
             android:layout_width="200dp"
             android:layout_height="50dp"
+            android:maxLines="1"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:hint="도착지" />
@@ -57,8 +77,10 @@
 
     <Button
         android:id="@+id/fine_Button"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
         android:text="find route"/>
 
 </LinearLayout>

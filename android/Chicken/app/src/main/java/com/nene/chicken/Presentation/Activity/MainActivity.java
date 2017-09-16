@@ -44,10 +44,9 @@ import rx.android.schedulers.AndroidSchedulers;
 public class MainActivity extends ChickenBaseActivity implements MainPresenter.View {
     MainPresenter presenter;
     private NMapView mMapView;// 지도 화면 View
-    private EditText fromEditText;
-    private EditText toEditText;
-    private Button fromButton;
-    private Button toButton;
+    private TextView fromTextView;
+    private TextView toTextView;
+
     private double totalDistance = 0;
     private List<TransPosition> positions;
     @BindView(R.id.mapContainer)
@@ -74,6 +73,13 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.mapContainer, fragment);
         fragmentTransaction.commit();
+
+        Intent intent =  getIntent();
+
+        fromTextView = (TextView)findViewById(R.id.from_TextView);
+        fromTextView.setText(intent.getStringExtra("fromTitle"));
+        toTextView = (TextView)findViewById(R.id.to_TextView);
+        toTextView.setText(intent.getStringExtra("toTitle"));
 
         List<MarkInfo> markInfoes = (List)getIntent().getSerializableExtra("markInfoList");
         positions = new ArrayList<>();
