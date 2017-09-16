@@ -27,6 +27,7 @@ import com.nhn.android.maps.maplib.NGPoint;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.maplib.NMapConverter;
 import com.nhn.android.maps.overlay.NMapPathData;
+import com.nhn.android.mapviewer.overlay.NMapPathDataOverlay;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +62,7 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         Log.e("좌표", "" + NMapConverter.utmK2Grs(350111810, 149774298).getLatitude() + "," + NMapConverter.utmK2Grs(350111810, 149774298).getLongitude());
 
     }
+
 
     @Override
     public void drawPath(List<TransPosition> positions) {
