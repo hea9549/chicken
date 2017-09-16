@@ -42,6 +42,10 @@ public class DistanceServiceImpl implements DistanceService {
                         "http://maps.googleapis.com/maps/api/elevation/json?locations=" + position.getLatitude() + "," +
                                 position.getLongitude() + "&sensor=false"
                 )
+                .doOnNext(result->{
+                    if (result.getResults().size() == 0)return;
+                        position.setHeight(result.getResults().get(0).getElevation());
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }

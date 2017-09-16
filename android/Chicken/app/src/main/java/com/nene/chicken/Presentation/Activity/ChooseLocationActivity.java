@@ -172,7 +172,7 @@ public class ChooseLocationActivity extends Activity {
 
 //                    Toast.makeText(ChooseLocationActivity.this, toastString , Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(ChooseLocationActivity.this, DrawPathActivity.class);
+                    Intent intent = new Intent(ChooseLocationActivity.this, MainActivity.class);
                     intent.putExtra("totalDistance",totalDistance);
                     intent.putExtra("markInfoList",markInfoList);
                     startActivity(intent);

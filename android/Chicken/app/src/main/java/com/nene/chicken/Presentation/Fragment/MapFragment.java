@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.nene.chicken.AppApplication;
 import com.nene.chicken.Model.TransPosition;
 import com.nene.chicken.NMap.NMapViewerResourceProvider;
+import com.nene.chicken.Presentation.Activity.MainActivity;
 import com.nene.chicken.Presentation.Presenter.MainMapPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenterImpl;
@@ -51,6 +52,8 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
     private NMapOverlayManager mOverlayManager;
     private NMapMyLocationOverlay mMyLocationOverlay;
     private NMapCompassManager mMapCompassManager;
+    private double totalDistance;
+    private double mySpeed;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,16 +68,7 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
 
 // create overlay manager
 
-        Observable.interval(1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(tick -> {
-                    Log.e("와이", "??:" + locationManager.isMyLocationEnabled());
-                    if (locationManager.isMyLocationEnabled()) {
-                        Log.e("속도당", "내 평균 속도 : " + presenter.getSpeed(locationManager.getMyLocation()));
-                        mapController.setMapCenter(locationManager.getMyLocation());
-                    }
-                }, fail -> Log.e("ERROR IN TICK", "error in tick =" + fail.toString()));
+
     }
 
     @Override
@@ -117,12 +111,20 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
 
             }
         });
-        List<TransPosition> sets = new ArrayList<>();
-        TransPosition p1 = new TransPosition(37.461974, 126.931800);
-        TransPosition p2 = new TransPosition(37.464563, 126.930126);
-        sets.add(p1);
-        sets.add(p2);
-        drawPath(sets);
+
+
+        Observable.interval(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(tick -> {
+                    Log.e("와이", "??:" + locationManager.isMyLocationEnabled());
+                    if (locationManager.isMyLocationEnabled()) {
+                        mySpeed = presenter.getSpeed(locationManager.getMyLocation());
+                        Log.e("속도당", "내 평균 속도 : " + mySpeed);
+                        ((MainActivity)getActivity()).setSpeed(mySpeed);
+                        mapController.setMapCenter(locationManager.getMyLocation());
+                    }
+                }, fail -> Log.e("ERROR IN TICK", "error in tick =" + fail.toString()));
     }
 
     @Override
@@ -178,5 +180,20 @@ public class MapFragment extends ChickenBaseFragment implements MainMapPresenter
         }
         pathData.endPathData();
         NMapPathDataOverlay pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
+    }
+
+    public void setTotalDistance(double totalDistance) {
+        this.totalDistance = totalDistance;
+        if(mySpeed < 0.3){
+            Observable.just("retry")
+                    .delay(2,TimeUnit.SECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(s -> {
+                        setTotalDistance(totalDistance);
+                    },fa->Log.e("또","실패냐= "+fa.toString()));
+            return;
+        }
+        ((MainActivity)getActivity()).setTakeTime((int)(totalDistance/mySpeed/60));
     }
 }
