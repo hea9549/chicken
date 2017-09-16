@@ -35,7 +35,7 @@ import javax.net.ssl.X509TrustManager;
 
 public class Communicator {
 	private static String findRouteUrl = "http://map.naver.com/findroute2/findWalkRoute.nhn?call=route2&output=json&coord_type=naver&search=0&";
-    private static String searchPositionUrl =  "https://openapi.naver.com/v1/search/local.xml?";
+    private static String searchPositionUrl =  "https://openapi.naver.com/v1/search/local.json?";
 
 
 //    urlType - 1:findRouteUrl  2:searchPositionUrl

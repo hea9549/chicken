@@ -67,7 +67,8 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
             @Override
             public void onClick(View v) {
                 hideKeyboard();
-                findRoute();
+                searchPosition();
+//                findRoute();
 //                Intent intent = new Intent(MainActivity.this, SearchListActivity.class);
 //                startActivity(intent);
             }
@@ -93,13 +94,13 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
             e.printStackTrace();
         }
 
-        String url = "query=%EC%A3%BC%EC%8B%9D&display=10&start=1&sort=random";
+        String url = "query=" + query + "&display=10&start=1&sort=random";
 
         Communicator.getHttp(2, url, new Handler() {
             public void handleMessage(Message msg) {
 
-//                String jsonString = msg.getData().getString("jsonString");
-//                Log.d("jsonString",jsonString);
+                String jsonString = msg.getData().getString("jsonString");
+                Log.d("jsonString",jsonString);
 //                try {
 //                    JSONObject dataObject = new JSONObject(jsonString);
 //                    String result = dataObject.getString("result");
