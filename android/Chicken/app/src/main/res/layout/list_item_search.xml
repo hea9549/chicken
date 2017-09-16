@@ -36,6 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:inputType="text"
+            android:maxLines="1"
             android:layout_marginRight="50dp"
             android:text="search result"
             android:textColor="#4d4d4d"
@@ -49,8 +51,9 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:layout_marginRight="50dp"
-            android:maxLines="1"
             android:text="search result"
+            android:inputType="text"
+            android:maxLines="1"
             android:textColor="#b3b3b3"
             android:textSize="14dp" />
 
