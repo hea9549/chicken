@@ -37,7 +37,6 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
     private NMapView mMapView;// 지도 화면 View
     private TextView fromTextView;
     private TextView toTextView;
-
     private double totalDistance = 0;
     private List<TransPosition> positions;
     @BindView(R.id.mapContainer)
@@ -50,7 +49,8 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
     TextView tv_speed;
     @BindView(R.id.tv_takeTime)
     TextView tv_takeTime;
-
+    @BindView(R.id.totalDistance)
+    TextView tv_totalDistance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,9 +85,7 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
                 .delay(5,TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s->{
-                    Toast.makeText(this, "모두계산햇찌롱!", Toast.LENGTH_SHORT).show();
-                    double totalHeightSum = 0;
+                .subscribe(s->{double totalHeightSum = 0;
                     for(int i = 0 ; i < positions.size()-1;i++){
                         totalHeightSum +=Math.abs(positions.get(i).getHeight()-positions.get(i+1).getHeight());
                     }
@@ -122,9 +120,9 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
                     if ((positions.get(positions.size()-1).getHeight()-positions.get(positions.size()-2).getHeight())/floorDistance>0.57735)markInfoes.get(positions.size()-1).inclineType = MarkInfo.INCLINE_ASCENT;
                     else if ((positions.get(positions.size()-1).getHeight()-positions.get(positions.size()-2).getHeight())/floorDistance<-0.57735)markInfoes.get(positions.size()-1).inclineType = MarkInfo.INCLINE_DESCENT;
                     else markInfoes.get(positions.size()-1).inclineType = MarkInfo.INCLINE_FLAT;
-
                     Toast.makeText(this, "총 거리 : "+totalDistance, Toast.LENGTH_SHORT).show();
                     fragment.setTotalDistance(totalDistance);
+                    setTotalDistance(totalDistance);
                 });
     }
 
@@ -151,6 +149,10 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         Date calcDate = new Date(date.getTime()+(min*60*1000));
         SimpleDateFormat format = new SimpleDateFormat("hh:mm");
         tv_endTime.setText(""+format.format(calcDate));
+    }
+
+    public void setTotalDistance(double distance){
+        tv_totalDistance.setText(""+((int)distance)+"M");
     }
 
 }

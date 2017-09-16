@@ -71,7 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:text="kang chon" />
 
                 </LinearLayout>
@@ -93,7 +93,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:text="house" />
 
                 </LinearLayout>
@@ -135,10 +135,22 @@
             tools:text="14:40" />
 
         <TextView
+            android:id="@+id/totalDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_takeTime"
+            android:layout_centerHorizontal="true"
+            tools:text="100M"
+            android:textStyle="bold"
+            android:textColor="#C1272D"/>
+
+        <TextView
             android:id="@+id/tv_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
+            android:layout_below="@id/totalDistance"
+            tools:text="10m/s"
+            android:layout_centerHorizontal="true" />
 
         <ImageView
             android:id="@+id/arrow"
