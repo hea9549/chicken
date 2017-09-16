@@ -1,6 +1,7 @@
 package com.nene.chicken.Presentation.Activity;
 import android.Manifest;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Toast;
 
 import com.gun0912.tedpermission.PermissionListener;
@@ -19,7 +20,16 @@ public class SplashActivity extends ChickenBaseActivity {
                 .setPermissionListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted() {
-                        navigateActivity(ChooseLocationActivity.class);
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                navigateActivity(ChooseLocationActivity.class);
+                                finish();
+                            }
+                        }, 3000);// 3 초
                     }
 
                     @Override

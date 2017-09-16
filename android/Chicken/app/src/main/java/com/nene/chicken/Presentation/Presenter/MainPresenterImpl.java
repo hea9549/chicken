@@ -39,4 +39,10 @@ public class MainPresenterImpl implements MainPresenter {
         }
         return totalMovedistance/(savePositions.size()-1);
     }
+
+    @Override
+    public int getPositionsSize(){
+        if (savePositions == null)return 0;
+        return savePositions.size();
+    }
 }

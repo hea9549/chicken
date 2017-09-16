@@ -14,6 +14,8 @@ public interface MainPresenter {
 
     double getSpeed(NGeoPoint point);
 
+    int getPositionsSize();
+
     interface View extends BaseViewPresenter{
 
         void drawPath(List<TransPosition> positions);

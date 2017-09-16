@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,14 +28,14 @@ import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-public class SearchListActivity extends Activity {
+public class SearchListActivity extends ChickenBaseActivity {
 
     private String query;
     private int type;
     private SearchListAdapter searchListAdapter;
     private ListView searchListView;
     private ArrayList<SearchResultInfo> searchResultInfoList = new ArrayList<SearchResultInfo>();
-    private Button backButton;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class SearchListActivity extends Activity {
         searchListView.setOnItemClickListener(searchItemClickListener);
         searchListView.setDividerHeight(0);
 
-        backButton = (Button)findViewById(R.id.back_Button);
+        backButton = (ImageButton)findViewById(R.id.back_Button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

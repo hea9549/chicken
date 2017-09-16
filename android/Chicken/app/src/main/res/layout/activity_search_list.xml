@@ -9,21 +9,26 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:background="#86ABBA">
 
-        <Button
+        <ImageButton
             android:id="@+id/back_Button"
-            android:layout_width="70dp"
-            android:layout_height="70dp" />
+            android:layout_width="15dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/back" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:text="장소"
             android:textColor="#ffffff"
-            android:textSize="19dp"
-            android:text="장소"/>
+            android:textSize="16dp" />
 
     </RelativeLayout>
 
