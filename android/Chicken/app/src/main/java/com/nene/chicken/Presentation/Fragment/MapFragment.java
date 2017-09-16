@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.nene.chicken.AppApplication;
+import com.nene.chicken.Model.TransPosition;
 import com.nene.chicken.NMap.NMapViewerResourceProvider;
+import com.nene.chicken.Presentation.Presenter.MainMapPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenterImpl;
 import com.nene.chicken.R;
@@ -21,9 +23,13 @@ import com.nhn.android.maps.NMapLocationManager;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
+import com.nhn.android.maps.overlay.NMapPathData;
 import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
+import com.nhn.android.mapviewer.overlay.NMapPathDataOverlay;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -34,7 +40,7 @@ import rx.schedulers.Schedulers;
  * Created by ParkHaeSung on 2017-09-16.
  */
 
-public class MapFragment extends Fragment {
+public class MapFragment extends ChickenBaseFragment implements MainMapPresenter.View{
 
     private NMapContext mMapContext;
     private NMapLocationManager locationManager;
@@ -111,6 +117,12 @@ public class MapFragment extends Fragment {
 
             }
         });
+        List<TransPosition> sets = new ArrayList<>();
+        TransPosition p1 = new TransPosition(37.461974, 126.931800);
+        TransPosition p2 = new TransPosition(37.464563, 126.930126);
+        sets.add(p1);
+        sets.add(p2);
+        drawPath(sets);
     }
 
     @Override
@@ -153,5 +165,18 @@ public class MapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_map, container, false);
         return view;
+    }
+
+    @Override
+    public void drawPath(List<TransPosition> positions) {
+        NMapPathData pathData = new NMapPathData(positions.size());
+
+        pathData.initPathData();
+        for(int i=0;i<positions.size();i++)
+        {
+            pathData.addPathPoint(positions.get(i).getLongitude(), positions.get(i).getLatitude(), 0);
+        }
+        pathData.endPathData();
+        NMapPathDataOverlay pathDataOverlay = mOverlayManager.createPathDataOverlay(pathData);
     }
 }
