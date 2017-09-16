@@ -57,23 +57,6 @@ public class SearchListAdapter extends ArrayAdapter<SearchResultInfo> {
         if (searchResultInfo != null) {
             viewHolder.titleTextView.setText(searchResultInfo.getTitle());
             viewHolder.addressTextView.setText(searchResultInfo.getRoadAddress());
-
-            final int mapx = searchResultInfo.getMapx();
-            final int mapy = searchResultInfo.getMapy();
-
-            LinearLayout selectLayout = (LinearLayout)v.findViewById(R.id.select_Layout);
-            selectLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(mContext,"this x : " + mapx,Toast.LENGTH_SHORT);
-//                    Intent intent = new Intent(getContext(), SendMessagePopupActivity.class);
-//                    intent.putExtra("friendsId",friendsId);
-//                    intent.putExtra("username",username);
-//                    MLog.d(username);
-//                    MLog.d(friendsId);
-//                    mContext.startActivity(intent);
-                }
-            });
         }
         return v;
     }
