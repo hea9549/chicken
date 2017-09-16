@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,23 +16,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.nene.chicken.AppApplication;
 import com.nene.chicken.Model.HeightResponse;
 import com.nene.chicken.Model.TransPosition;
 import com.nene.chicken.Presentation.Fragment.MapFragment;
-import com.nene.chicken.Presentation.Presenter.BaseViewPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenter;
-import com.nene.chicken.Presentation.Presenter.MainPresenterImpl;
 import com.nene.chicken.R;
 import com.nene.chicken.Service.DistanceService;
 import com.nene.chicken.Service.DistanceServiceImpl;
 import com.nene.chicken.Util.DistanceUtil;
 import com.nene.chicken.Util.GeoTrans;
 import com.nhn.android.maps.NMapView;
+import com.nhn.android.maps.maplib.NGeoPoint;
+import com.nhn.android.maps.maplib.NMapConverter;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -72,7 +68,6 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setLayout();
         MapFragment fragment = new MapFragment();
         fragment.setArguments(new Bundle());
         FragmentManager fm = getSupportFragmentManager();
@@ -80,10 +75,12 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         fragmentTransaction.add(R.id.mapContainer, fragment);
         fragmentTransaction.commit();
 
-        positions = (List<TransPosition>)getIntent().getSerializableExtra("positions");
+        List<MarkInfo> markInfoes = (List)getIntent().getSerializableExtra("markInfoList");
         positions = new ArrayList<>();
-        positions.add(new TransPosition(35.231686, 129.084002));
-        positions.add(new TransPosition(35.238013, 129.086390));
+        for(int i = 0 ; i<markInfoes.size();i++){
+            NGeoPoint n = NMapConverter.utmK2Grs(markInfoes.get(i).getMapx(),markInfoes.get(i).getMapy());
+            positions.add(new TransPosition(n.getLatitude(),n.getLongitude()));
+        }
         DistanceService distanceService = new DistanceServiceImpl();
         Observable<HeightResponse> heightObservable = distanceService.getHeight(positions.get(0));
         for(int i = 1 ; i < positions.size();i++){
@@ -98,6 +95,7 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
             }
             Toast.makeText(this, "총 거리 : "+totalDistance, Toast.LENGTH_SHORT).show();
             fragment.setTotalDistance(totalDistance);
+            fragment.drawPath(positions);
         }).subscribe(success->{
 
         },fail->{
@@ -109,75 +107,6 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
     @Override
     public void drawPath(List<TransPosition> positions) {
         // 화면그리기 작성해야함
-    }
-
-    private void setLayout(){
-
-        fromEditText = (EditText)findViewById(R.id.editText);
-        toEditText = (EditText)findViewById(R.id.editText2);
-        fromButton = (Button) findViewById(R.id.button2);
-        fromButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard();
-                findRoute();
-//                Intent intent = new Intent(MainActivity.this, SearchListActivity.class);
-//                startActivity(intent);
-
-
-            }
-        });
-
-        toButton = (Button) findViewById(R.id.button);
-        toButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard();
-                Intent intent = new Intent(MainActivity.this, SearchListActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void findRoute(){
-        double startLa = 127.6433222;
-        double startLo = 37.7965062;
-        double destLa = 127.6423415;
-        double destLo = 37.7944884;
-
-        String url = "start=" + startLa + "," + startLo + "&destination=" + destLa + "," + destLo;
-
-        Communicator.getHttp(url, new Handler() {
-            public void handleMessage(Message msg) {
-
-                String jsonString = msg.getData().getString("jsonString");
-                Log.d("jsonString",jsonString);
-                try {
-                    JSONObject dataObject = new JSONObject(jsonString);
-                    String result = dataObject.getString("result");
-
-                    JSONObject dataObject2 = new JSONObject(result);
-                    String summary = dataObject2.getString("summary");
-
-                    Log.d("yurimmm summary", result);
-                    JSONObject  tempObject = new JSONObject(summary);
-
-                    int totalDistance = tempObject.getInt("totalDistance");
-                    String toastString = totalDistance + " distance";
-
-                    Toast.makeText(MainActivity.this, toastString , Toast.LENGTH_SHORT).show();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-    }
-
-    private void hideKeyboard(){
-        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     public void setStartTime(String time){

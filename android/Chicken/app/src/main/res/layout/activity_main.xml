@@ -7,53 +7,28 @@
     tools:context="com.nene.chicken.Presentation.Activity.MainActivity">
 
     <EditText
-        android:id="@+id/editText"
+        android:layout_alignParentTop="true"
+        android:id="@+id/from_EditText"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:hint="출발지"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignBaseline="@+id/editText"
-        android:layout_alignBottom="@+id/editText"
-        android:layout_marginLeft="8dp"
-        android:layout_toEndOf="@+id/editText"
-        android:text="검색"
-        app:layout_constraintLeft_toRightOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignStart="@+id/button2"
-        android:layout_alignTop="@+id/editText2"
-        android:text="검색"
-        app:layout_constraintLeft_toRightOf="@+id/editText2"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        android:hint="출발지" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:layout_below="@id/from_EditText"
+        android:id="@+id/to_EditText"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_below="@id/editText"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:hint="도착지"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        android:hint="도착지" />
 
     <LinearLayout
         android:id="@+id/mapContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/to_EditText"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:orientation="horizontal" />
