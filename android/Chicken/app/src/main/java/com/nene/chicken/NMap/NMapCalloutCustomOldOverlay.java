@@ -41,11 +41,10 @@ public class NMapCalloutCustomOldOverlay extends NMapCalloutOverlay {
 
 	private static final int CALLOUT_TEXT_COLOR = 0xFFFFFFFF;
 	private static final float CALLOUT_TEXT_SIZE = 16.0F;
-	private static final Typeface CALLOUT_TEXT_TYPEFACE = null;//Typeface.DEFAULT_BOLD;
+	private static final Typeface CALLOUT_TEXT_TYPEFACE = null; //Typeface.DEFAULT_BOLD;
 
 	private static final float CALLOUT_RIGHT_BUTTON_WIDTH = 50.67F;
 	private static final float CALLOUT_RIGHT_BUTTON_HEIGHT = 34.67F;
-
 	private static final float CALLOUT_MARGIN_X = 9.33F;
 	private static final float CALLOUT_PADDING_X = 9.33F;
 	private static final float CALLOUT_PADDING_OFFSET = 0.45F;

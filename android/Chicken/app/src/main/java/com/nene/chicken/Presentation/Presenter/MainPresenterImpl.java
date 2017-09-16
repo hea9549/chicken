@@ -32,6 +32,7 @@ public class MainPresenterImpl implements MainPresenter {
         TransPosition transPosition = new TransPosition(point.getLatitude(),point.getLongitude());
         savePositions.add(transPosition);
         if(savePositions.size()==0) return 0;
+        if (savePositions.size()==20)savePositions.remove(0);
         double totalMovedistance = 0;
         for(int i = 0 ; i < savePositions.size()-1;i++){
             totalMovedistance += DistanceUtil.calDistance(savePositions.get(i),savePositions.get(i+1));

@@ -58,16 +58,14 @@ public class MapFragment extends Fragment {
         mMapCompassManager = new NMapCompassManager(getActivity());
 
 // create overlay manager
-        mOverlayManager = new NMapOverlayManager(getContext(), mapView, mMapViewerResourceProvider);
-        mMyLocationOverlay = mOverlayManager.createMyLocationOverlay(locationManager, mMapCompassManager);
+
         Observable.interval(1, TimeUnit.SECONDS)
-                .take(100)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(tick -> {
-                    Log.e("와이","??:"+locationManager.isMyLocationEnabled());
-                    if (locationManager.isMyLocationEnabled()){
-                        Toast.makeText(getContext(), "내 평균 속도 : "+presenter.getSpeed(locationManager.getMyLocation()), Toast.LENGTH_SHORT).show();
+                    Log.e("와이", "??:" + locationManager.isMyLocationEnabled());
+                    if (locationManager.isMyLocationEnabled()) {
+                        Log.e("속도당", "내 평균 속도 : " + presenter.getSpeed(locationManager.getMyLocation()));
                         mapController.setMapCenter(locationManager.getMyLocation());
                     }
                 }, fail -> Log.e("ERROR IN TICK", "error in tick =" + fail.toString()));
@@ -85,6 +83,8 @@ public class MapFragment extends Fragment {
         mapView.requestFocus();
         mMapContext.setupMapView(mapView);
         mapController = mapView.getMapController();
+        mOverlayManager = new NMapOverlayManager(getContext(), mapView, mMapViewerResourceProvider);
+        mMyLocationOverlay = mOverlayManager.createMyLocationOverlay(locationManager, mMapCompassManager);
         mapView.setOnMapStateChangeListener(new NMapView.OnMapStateChangeListener() {
             @Override
             public void onMapInitHandler(NMapView nMapView, NMapError nMapError) {
