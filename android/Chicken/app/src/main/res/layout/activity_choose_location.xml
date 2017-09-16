@@ -11,14 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="70dp">
 
-        <Button
-            android:layout_width="70dp"
-            android:layout_height="70dp" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textSize="19dp"
             android:text="find Route"/>
 
     </RelativeLayout>
@@ -30,22 +27,28 @@
         android:gravity="center"
         android:orientation="horizontal">
 
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="13dp"
+            android:text="from"/>
+
+
         <EditText
             android:id="@+id/from_EditText"
             android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:hint="출발지"
-            android:maxLines="1" />
+            android:layout_height="wrap_content"
+            android:inputType="textNoSuggestions"
+            android:maxLines="1"
+            android:textSize="13dp" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:text="검색" />
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/search" />
 
 
     </LinearLayout>
@@ -57,30 +60,34 @@
         android:gravity="center"
         android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="to"
+            android:textSize="13dp" />
+
         <EditText
             android:id="@+id/to_EditText"
             android:layout_width="200dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:inputType="textNoSuggestions"
             android:maxLines="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:hint="도착지" />
+            android:textSize="13dp" />
 
         <Button
             android:id="@+id/button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="검색" />
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/search" />
     </LinearLayout>
 
     <Button
         android:id="@+id/fine_Button"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-        android:text="find route"/>
+        android:background="@drawable/find"/>
 
 </LinearLayout>
