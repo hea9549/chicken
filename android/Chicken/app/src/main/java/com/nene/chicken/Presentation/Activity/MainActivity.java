@@ -59,8 +59,6 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
     TextView tv_speed;
     @BindView(R.id.tv_takeTime)
     TextView tv_takeTime;
-    @BindView(R.id.wrapper_info)
-    RelativeLayout wrapper_info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,15 +128,4 @@ public class MainActivity extends ChickenBaseActivity implements MainPresenter.V
         tv_takeTime.setText(""+min+"Min");
     }
 
-    public void setInfo(boolean visible,String startTime,String endTime,int taskTime,double speed){
-        if(visible)wrapper_info.setVisibility(View.VISIBLE);
-        else {
-            wrapper_info.setVisibility(View.INVISIBLE);
-            return;
-        }
-        setStartTime(startTime);
-        setEndTime(endTime);
-        setTakeTime(taskTime);
-        setSpeed(speed);
-    }
 }
