@@ -3,10 +3,9 @@ package com.nene.chicken.Presentation.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.os.Message
+import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,29 +14,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.nene.chicken.AppApplication;
 import com.nene.chicken.Model.TransPosition;
 import com.nene.chicken.Presentation.Fragment.MapFragment;
-import com.nene.chicken.Presentation.Presenter.BaseViewPresenter;
 import com.nene.chicken.Presentation.Presenter.MainPresenter;
-import com.nene.chicken.Presentation.Presenter.MainPresenterImpl;
 import com.nene.chicken.R;
 import com.nhn.android.maps.NMapView;
-import com.nhn.android.maps.maplib.NGPoint;
-import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.maplib.NMapConverter;
-import com.nhn.android.maps.overlay.NMapPathData;
-import com.nhn.android.mapviewer.overlay.NMapPathDataOverlay;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 
 public class MainActivity extends ChickenBaseActivity implements MainPresenter.View {
     MainPresenter presenter;
