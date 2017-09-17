@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class SearchListActivity extends ChickenBaseActivity {
     private SearchListAdapter searchListAdapter;
     private ListView searchListView;
     private ArrayList<SearchResultInfo> searchResultInfoList = new ArrayList<SearchResultInfo>();
-    private ImageButton backButton;
+    private RelativeLayout backLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,8 @@ public class SearchListActivity extends ChickenBaseActivity {
         searchListView.setOnItemClickListener(searchItemClickListener);
         searchListView.setDividerHeight(0);
 
-        backButton = (ImageButton)findViewById(R.id.back_Button);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        backLayout = (RelativeLayout) findViewById(R.id.back_Layout);
+        backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

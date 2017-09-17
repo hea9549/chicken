@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.nene.chicken.Model.TransPosition;
@@ -35,6 +36,7 @@ public class ChooseLocationActivity extends ChickenBaseActivity {
     private ImageButton fromButton;
     private ImageButton toButton;
     private Button findButton;
+    private RelativeLayout mypageLayout;
 
     private int mapxFrom = -1;
     private int mapyFrom = -1;
@@ -91,6 +93,16 @@ public class ChooseLocationActivity extends ChickenBaseActivity {
     private void setLayout(){
         fromEditText = (EditText)findViewById(R.id.from_EditText);
         toEditText = (EditText)findViewById(R.id.to_EditText);
+
+        mypageLayout = (RelativeLayout)findViewById(R.id.mypage_Layout);
+        mypageLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard();
+                Intent intent = new Intent(ChooseLocationActivity.this, MyInfoActivity.class);
+                startActivity(intent);
+            }
+        });
 
         fromButton = (ImageButton) findViewById(R.id.button2);
         fromButton.setOnClickListener(new View.OnClickListener() {

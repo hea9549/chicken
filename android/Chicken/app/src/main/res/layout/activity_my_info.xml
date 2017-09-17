@@ -1,36 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.nene.chicken.Presentation.Activity.MyInfoActivity">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="116dp"
-        android:background="#86ABBA"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="#86ABBA">
 
-        <TextView
-            android:id="@+id/mySpeed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="내 속도는?"
-            android:textColor="#ffffff"
-            android:textSize="16dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="8dp">
+
+            <RelativeLayout
+                android:id="@+id/back_Layout"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/back" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="내 속도는?"
+                android:textColor="#ffffff"
+                android:textSize="16dp" />
+
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:layout_height="match_parent">
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_below="@id/mySpeed"
-            android:layout_centerHorizontal="true"
             android:src="@drawable/dash" />
-    </RelativeLayout>
+
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/imageView"
@@ -47,24 +74,24 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="0dp"
         android:src="@drawable/up"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintLeft_toLeftOf="@+id/imageView"
         app:layout_constraintRight_toRightOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:layout_marginStart="8dp" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="0dp"
         android:src="@drawable/down"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/imageView3"
         app:layout_constraintRight_toRightOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        android:layout_marginStart="8dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -88,7 +115,9 @@
         android:textSize="14dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -100,4 +129,4 @@
         app:layout_constraintLeft_toLeftOf="@+id/imageView"
         app:layout_constraintRight_toRightOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-</android.support.constraint.ConstraintLayout>
+</>
