@@ -7,19 +7,36 @@
     android:orientation="vertical"
     tools:context="com.nene.chicken.Presentation.Activity.ChooseLocationActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp">
+        </RelativeLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_weight="1"
             android:text="길찾기"
             android:textColor="#86ABBA"
             android:textSize="19dp" />
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/mypage"/>
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

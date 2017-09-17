@@ -54,6 +54,8 @@ public class SearchListActivity extends ChickenBaseActivity {
         searchListView = (ListView) findViewById(R.id.search_listview);
         searchListAdapter = new SearchListAdapter(this, R.layout.list_item_search, searchResultInfoList);
         searchListView.setAdapter(searchListAdapter);
+
+        Log.d("find", "It's Ok");
         searchListView.setOnItemClickListener(searchItemClickListener);
         searchListView.setDividerHeight(0);
 
@@ -71,10 +73,13 @@ public class SearchListActivity extends ChickenBaseActivity {
     private AdapterView.OnItemClickListener searchItemClickListener = new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
+
+            Log.d("find", "It's haha");
             int mapx = searchResultInfoList.get(position).getMapx();
             int mapy = searchResultInfoList.get(position).getMapy();
             String title = searchResultInfoList.get(position).getTitle();
 
+            Log.d("find", "It's Ok NOW");
             Intent intent = new Intent();
             intent.putExtra("title",title);
             if(type == 1){
@@ -86,6 +91,7 @@ public class SearchListActivity extends ChickenBaseActivity {
             }
             setResult(RESULT_OK, intent);
 
+            Log.d("find", "wHAT'S THE PROBLEM");
             finish();
 
         }
@@ -116,10 +122,10 @@ public class SearchListActivity extends ChickenBaseActivity {
                     JSONArray itemArray = new JSONArray(itemList);
                     JSONObject tempObject;
 
-                    if(itemArray.length() == 0){
-                        searchListView.setVisibility(View.GONE);
-                    }else {
-                        searchListView.setVisibility(View.VISIBLE);
+//                    if(itemArray.length() == 0){
+//                        searchListView.setVisibility(View.GONE);
+//                    }else {
+//                        searchListView.setVisibility(View.VISIBLE);
 
                         for (int i = 0; i < itemArray.length(); i++) {
                             String tempString = itemArray.getString(i);
@@ -136,7 +142,7 @@ public class SearchListActivity extends ChickenBaseActivity {
 
                             searchResultInfoList.add(new SearchResultInfo(title, roadAddress, mapx, mapy));
                         }
-                    }
+//                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
