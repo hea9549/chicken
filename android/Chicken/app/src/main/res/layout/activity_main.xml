@@ -118,19 +118,25 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/wrapper_info"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:gravity="center"
         android:background="#ffffff"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
 
         <TextView
             android:id="@+id/tv_startTime"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="8dp"
             android:gravity="center"
             android:textColor="#86ABBA"
             android:textSize="18dp"
@@ -140,54 +146,68 @@
             android:id="@+id/tv_endTime"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/tv_startTime"
             android:gravity="center"
             android:textColor="#86ABBA"
             android:textSize="18dp"
             tools:text="14:40" />
 
-        <TextView
-            android:id="@+id/totalDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_takeTime"
-            android:layout_centerHorizontal="true"
-            tools:text="100M"
-            android:textStyle="bold"
-            android:textColor="#C1272D"/>
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_height="16dp"
+                android:layout_toRightOf="@id/tv_endTime"
+                android:src="@drawable/arrow_right" />
 
-        <TextView
-            android:id="@+id/tv_speed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/totalDistance"
-            tools:text="10m/s"
-            android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/tv_takeTime"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/arrow"
+                android:gravity="center"
+                android:textColor="#C1272D"
+                android:textSize="18dp"
+                tools:text="20Min" />
+
+        </LinearLayout>
 
         <ImageView
-            android:id="@+id/arrow"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="15dp"
-            android:layout_toRightOf="@id/tv_endTime"
-            android:src="@drawable/arrow_right" />
+            android:layout_width="58dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/goingon"/>
 
-        <TextView
-            android:id="@+id/tv_takeTime"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_toRightOf="@id/arrow"
-            android:gravity="center"
-            android:textColor="#C1272D"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            tools:text="20Min" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:gravity="center">
 
+            <TextView
+                android:id="@+id/totalDistance"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_takeTime"
+                android:layout_centerHorizontal="true"
+                android:textSize="13dp"
+                android:textAlignment="textEnd"
+                tools:text="100M"
+                android:textColor="#808080"/>
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_speed"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/totalDistance"
+                tools:text="10m/s"
+                android:textAlignment="textStart"
+                android:textSize="13dp"
+                android:textColor="#808080"/>
+
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
