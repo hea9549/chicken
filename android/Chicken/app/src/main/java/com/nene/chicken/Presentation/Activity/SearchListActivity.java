@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class SearchListActivity extends ChickenBaseActivity {
     private SearchListAdapter searchListAdapter;
     private ListView searchListView;
     private ArrayList<SearchResultInfo> searchResultInfoList = new ArrayList<SearchResultInfo>();
-    private ImageButton backButton;
+    private RelativeLayout backLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +55,13 @@ public class SearchListActivity extends ChickenBaseActivity {
         searchListView = (ListView) findViewById(R.id.search_listview);
         searchListAdapter = new SearchListAdapter(this, R.layout.list_item_search, searchResultInfoList);
         searchListView.setAdapter(searchListAdapter);
+
+        Log.d("find", "It's Ok");
         searchListView.setOnItemClickListener(searchItemClickListener);
         searchListView.setDividerHeight(0);
 
-        backButton = (ImageButton)findViewById(R.id.back_Button);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        backLayout = (RelativeLayout) findViewById(R.id.back_Layout);
+        backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -71,10 +74,13 @@ public class SearchListActivity extends ChickenBaseActivity {
     private AdapterView.OnItemClickListener searchItemClickListener = new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
+
+            Log.d("find", "It's haha");
             int mapx = searchResultInfoList.get(position).getMapx();
             int mapy = searchResultInfoList.get(position).getMapy();
             String title = searchResultInfoList.get(position).getTitle();
 
+            Log.d("find", "It's Ok NOW");
             Intent intent = new Intent();
             intent.putExtra("title",title);
             if(type == 1){
@@ -86,6 +92,7 @@ public class SearchListActivity extends ChickenBaseActivity {
             }
             setResult(RESULT_OK, intent);
 
+            Log.d("find", "wHAT'S THE PROBLEM");
             finish();
 
         }
@@ -107,7 +114,7 @@ public class SearchListActivity extends ChickenBaseActivity {
 
                 searchResultInfoList.clear();
                 String jsonString = msg.getData().getString("jsonString");
-                Log.d("jsonString",jsonString);
+                Log.d("jsonString searchPos",jsonString);
 
                 try {
                     JSONObject dataObject = new JSONObject(jsonString);
@@ -116,21 +123,27 @@ public class SearchListActivity extends ChickenBaseActivity {
                     JSONArray itemArray = new JSONArray(itemList);
                     JSONObject tempObject;
 
-                    for (int i = 0; i < itemArray.length(); i++) {
-                        String tempString = itemArray.getString(i);
-                        tempObject = new JSONObject(tempString);
+//                    if(itemArray.length() == 0){
+//                        searchListView.setVisibility(View.GONE);
+//                    }else {
+//                        searchListView.setVisibility(View.VISIBLE);
 
-                        String title = tempObject.getString("title");
-                        title = title.replace("<b>","");
-                        title = title.replace("</b>","");
+                        for (int i = 0; i < itemArray.length(); i++) {
+                            String tempString = itemArray.getString(i);
+                            tempObject = new JSONObject(tempString);
 
-                        String roadAddress = tempObject.getString("roadAddress");
-                        int mapx = tempObject.getInt("mapx");
-                        int mapy = tempObject.getInt("mapy");
+                            String title = tempObject.getString("title");
+                            title = title.replace("<b>", "");
+                            title = title.replace("</b>", "");
+                            title = title.replace("&amp;", "");
 
-                        searchResultInfoList.add(new SearchResultInfo(title, roadAddress, mapx, mapy));
-                    }
+                            String roadAddress = tempObject.getString("roadAddress");
+                            int mapx = tempObject.getInt("mapx");
+                            int mapy = tempObject.getInt("mapy");
 
+                            searchResultInfoList.add(new SearchResultInfo(title, roadAddress, mapx, mapy));
+                        }
+//                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
